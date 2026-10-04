@@ -10,176 +10,64 @@
   --color-superficie: #10243f;
   --color-borde: #1e314f;
   --color-hueso: #eef2f7;
-  --color-pista: #5b6b80;
   --color-voltaje: #b4e854;
   --color-voltaje-hover: #c8ec83;
-  /* POS surfaces (pos.pirotecnia vendra-tokens / tailwind surface scale) */
-  --color-surf-50: #22385a;
+  --color-voltaje-oscuro: #7fb52e;
+  /* POS surfaces (pos.pirotecnia vendra-tokens) */
   --color-surf-200: #152a47;
   --color-surf-400: #0d1d35;
-  --color-surf-600: #07101f;
-  /* Pista is only for icons, borders and text >= 18px; on dark use muted for body copy */
   --color-muted: #93a4bd;
+  --color-niebla: #c9d4e3;
   --color-warn: #ffb547;
   --color-error: #ff7a66;
   --font-display: 'Outfit', ui-sans-serif, system-ui, sans-serif;
-  --font-pos: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
   --font-body: 'Figtree', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
-  --text-kbd: 13px;
-  --text-2xs: 11px;
 }
 
-html { background: var(--color-noche); }
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto !important; }
+html { background: var(--color-noche); scroll-behavior: smooth; scroll-padding-top: 104px; }
 body {
   margin: 0;
   background: var(--color-noche);
   color: var(--color-vuelo);
   font-family: var(--font-body);
-  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 ::selection { background: var(--color-horizonte); color: var(--color-vuelo); }
-.font-display { letter-spacing: -0.02em; }
 .tnum { font-variant-numeric: tabular-nums; }
 :focus-visible { outline: 2px solid var(--color-cielo); outline-offset: 2px; }
 
-/* ---------- Aero-Glass ---------- */
-.glass-cielo {
-  background: rgba(255, 255, 255, 0.65);
-  -webkit-backdrop-filter: blur(24px) saturate(1.5);
-  backdrop-filter: blur(24px) saturate(1.5);
-  border: 1px solid rgba(220, 235, 255, 0.8);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 12px 40px -14px rgba(12, 35, 64, 0.16);
-}
-.glass-vuelo {
-  background: rgba(16, 36, 63, 0.6);
-  -webkit-backdrop-filter: blur(24px) saturate(1.3);
-  backdrop-filter: blur(24px) saturate(1.3);
-  border: 1px solid rgba(47, 140, 255, 0.2);
-  box-shadow: inset 0 1px 0 rgba(125, 184, 255, 0.3), 0 24px 60px -24px rgba(0, 0, 0, 0.55);
-}
-
-/* Floating HUD capsule: dark glass by default, daylight glass while it floats over the sky. */
-.hud {
-  --hud-ink: #eef2f7;
-  --hud-muted: #b6c4d8;
-  color: var(--hud-ink);
-  background: rgba(16, 36, 63, 0.6);
-  -webkit-backdrop-filter: blur(24px) saturate(1.5);
-  backdrop-filter: blur(24px) saturate(1.5);
-  border: 1px solid rgba(47, 140, 255, 0.2);
-  box-shadow: inset 0 1px 0 rgba(125, 184, 255, 0.3), 0 16px 48px -20px rgba(0, 0, 0, 0.5);
-  transition: background-color 0.4s, border-color 0.4s, color 0.4s, box-shadow 0.4s;
-  will-change: transform, backdrop-filter;
-  transform: translate3d(0, 0, 0);
-}
-.hud[data-tone='light'] {
-  --hud-ink: #0c2340;
-  --hud-muted: #2b4060;
-  background: rgba(255, 255, 255, 0.65);
-  border-color: rgba(220, 235, 255, 0.8);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 12px 40px -14px rgba(12, 35, 64, 0.18);
-}
-
-/* Glass button with inner highlight and a light sweep on hover */
-.btn-glass {
-  position: relative;
-  overflow: hidden;
-  color: #f6f8fb;
-  background: linear-gradient(180deg, rgba(79, 160, 255, 0.95), rgba(47, 140, 255, 0.9));
-  border: 1px solid rgba(125, 184, 255, 0.55);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 6px 18px -8px rgba(47, 140, 255, 0.7);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  transform: translate3d(0, 0, 0);
-  text-shadow: 0 1px 0 rgba(12, 35, 64, 0.35);
-}
-.btn-glass::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.45) 50%, transparent 65%);
-  transform: translate3d(-120%, 0, 0);
-  transition: transform 0.6s ease;
-}
-.btn-glass:hover { transform: translate3d(0, -1px, 0); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 10px 28px -6px rgba(47, 140, 255, 0.9); }
-.btn-glass:hover::after { transform: translate3d(120%, 0, 0); }
-
-/* ---------- POS primitives (ported from pos.pirotecnia styles/index.css) ---------- */
 @layer components {
-.vpos { color-scheme: dark; --control-h: 3rem; --control-h-sm: 2.5rem; --pv-accent-line: 180 232 84; --pv-total: 180 232 84; font-family: var(--font-body); }
-.vpos .kbd {
-  display: inline-flex; height: 1.5rem; min-width: 1.5rem; align-items: center; justify-content: center;
-  border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.15); background: rgba(10, 20, 40, 0.6);
-  padding: 0 0.375rem; font-family: var(--font-mono); font-size: var(--text-kbd); font-weight: 500; color: #cbd5e1;
-}
-.vpos .kbd-on-fill { border-color: rgba(10, 20, 40, 0.35); background: rgba(0, 0, 0, 0.1); color: inherit; }
-@media not all and (any-pointer: fine) { .vpos .kbd { display: none; } }
-.vpos .eyebrow { font-size: var(--text-2xs); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-muted); }
-.vpos .cq { container-type: inline-size; }
-.vpos .total-display {
-  font-family: var(--font-mono); font-weight: 700; line-height: 1; letter-spacing: -0.025em;
-  font-variant-numeric: tabular-nums; color: rgb(var(--pv-total)); font-size: min(3rem, 13cqi);
-}
-.vpos .press { transition: background-color .15s, border-color .15s, color .15s, transform .1s; }
-.vpos .press:active:not(:disabled):not([aria-disabled='true']) { transform: scale(0.98); }
-.vpos .chip {
-  display: inline-flex; min-height: var(--control-h-sm); align-items: center; gap: 0.375rem; white-space: nowrap;
-  border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); padding: 0 0.75rem; font-size: 0.875rem; color: #cbd5e1;
-}
-.vpos .chip[aria-pressed='true'] { border-color: rgba(180, 232, 84, 0.6); background: rgba(180, 232, 84, 0.15); color: #c8ec83; }
-.vpos .input {
-  width: 100%; min-height: var(--control-h); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1);
-  background: var(--color-surf-400); padding: 0 0.75rem; color: var(--color-hueso); outline: none;
-}
-.vpos .input:focus { border-color: var(--color-cielo); }
-.vpos .input::placeholder { font-family: var(--font-mono); color: var(--color-muted); }
-.vpos .btn-primary {
-  display: inline-flex; min-height: var(--control-h); width: 100%; align-items: center; justify-content: center; gap: 0.5rem;
-  border-radius: 8px; background: var(--color-voltaje); padding: 0 1rem; font-weight: 600; font-size: 0.875rem; color: var(--color-noche);
-  transition: background-color .15s, box-shadow .2s, transform .1s;
-  box-shadow: 0 0 0 1px rgba(180, 232, 84, 0.4), 0 8px 28px -10px rgba(180, 232, 84, 0.55);
-}
-.vpos .btn-primary:hover:not(:disabled) { background: var(--color-voltaje-hover); }
-.vpos .btn-primary:active:not(:disabled) { transform: scale(0.98); }
-.vpos .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
-}
-
-/* Active ticket line: unlayered so a row's border-color utility can't repaint the Voltaje edge. */
-.vpos .row-active { border-left-width: 4px; border-left-color: rgb(var(--pv-accent-line)); }
-
-/* Console scroll areas: no grey native bar — a 4px Borde thumb on a transparent track. */
-.vpos-scroll { scrollbar-width: thin; scrollbar-color: var(--color-borde) transparent; }
-.vpos-scroll::-webkit-scrollbar { width: 4px; height: 4px; }
-.vpos-scroll::-webkit-scrollbar-track { background: transparent; }
-.vpos-scroll::-webkit-scrollbar-thumb { background: var(--color-borde); border-radius: 4px; }
-.scrollbar-none { scrollbar-width: none; }
-.scrollbar-none::-webkit-scrollbar { display: none; }
-
-@keyframes fd-pulse { 0%, 100% { opacity: 1 } 50% { opacity: .3 } }
-.fd-pulse { animation: fd-pulse 2s ease-in-out infinite; }
-@keyframes vpos-glow { 0%, 100% { box-shadow: 0 0 0 0 rgba(180, 232, 84, 0) } 50% { box-shadow: 0 0 36px 0 rgba(180, 232, 84, 0.35) } }
-.vpos-glow { animation: vpos-glow 1.6s ease-in-out 2; }
-/* The ticket line that just changed: one Voltaje wash, re-keyed per qty. */
-@keyframes vpos-flash { from { background: rgba(180, 232, 84, 0.18); box-shadow: inset 0 0 0 1px rgba(180, 232, 84, 0.6) } to { background: transparent; box-shadow: inset 0 0 0 1px transparent } }
-.vpos-flash { animation: vpos-flash 0.6s cubic-bezier(.2, .8, .2, 1) both; }
-/* Glide slope draws itself while it enters the viewport (ahead of the plane, which joins it at 30 % vh and lands at 66 % vh);
-   the rhombus lights as the stroke completes. One named timeline on the whole slope, so the end marker isn't timed off its
-   own 8 px box. A scaleY on a 1 px line has no length to compute. Without scroll timelines (Firefox) it is simply drawn. */
-@keyframes vpos-glide-draw { from { transform: scaleY(0) } to { transform: scaleY(1) } }
-@keyframes vpos-glide-land { from { opacity: 0 } to { opacity: 1 } }
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .vpos-glide { view-timeline-name: --vpos-glide; }
-    .vpos-glide-line { transform-origin: top; animation: vpos-glide-draw linear both; animation-timeline: --vpos-glide; animation-range: entry 0% entry 90%; }
-    .vpos-glide-end { animation: vpos-glide-land linear both; animation-timeline: --vpos-glide; animation-range: entry 90% entry 100%; }
+  /* Magnetic pill CTA; its transform is written by usePointerFx */
+  .pill {
+    position: relative; overflow: hidden; display: inline-flex; flex-shrink: 0; align-items: center; white-space: nowrap;
+    border-radius: 999px; font-family: var(--font-display); font-weight: 600; transition: transform .25s ease-out;
+  }
+  .eyebrow { margin: 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: .12em; }
+  .h2 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 4.4vw, 3.8rem); line-height: 1; letter-spacing: -.02em; }
+  .gutter { padding-left: clamp(20px, 5vw, 64px); padding-right: clamp(20px, 5vw, 64px); }
+  .field {
+    box-sizing: border-box; border-radius: 12px; background: var(--color-surf-400); border: 1px solid var(--color-borde);
+    color: var(--color-hueso); font-family: var(--font-body); font-size: 16px; outline: none; transition: border-color .2s, box-shadow .2s;
+  }
+  .field::placeholder { color: #6f82a0; }
+  .field:focus { border-color: var(--color-cielo) !important; box-shadow: 0 0 0 4px rgba(47, 140, 255, .18); }
+  .kbd {
+    padding: 2px 7px; border-radius: 5px; border: 1px solid rgba(255, 255, 255, .15); background: rgba(10, 20, 40, .6);
+    color: #cbd5e1; font-family: var(--font-mono); font-size: 11px;
   }
 }
+
+@keyframes fdPulse { 0%, 100% { opacity: 1; transform: scale(1) } 50% { opacity: .35; transform: scale(.7) } }
+@keyframes fdCaret { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+.fd-pulse { animation: fdPulse 2s ease-in-out infinite; }
+.fd-caret { animation: fdCaret 1s steps(1) infinite; }
+/* Dotted flight paths drift at 14 px/s; 1386 is a whole number of both dash periods (2+9, 2+7), so the loop is seamless. */
+@keyframes flow { to { stroke-dashoffset: -1386 } }
+.flow { animation: flow 99s linear infinite; }
+
 @media (prefers-reduced-motion: reduce) {
-  .fd-pulse, .vpos-glow, .vpos-flash { animation: none; }
-  .btn-glass, .btn-glass::after, .hud { transition: none; }
-  * { scroll-behavior: auto !important; }
+  html { scroll-behavior: auto; }
+  .fd-pulse, .fd-caret, .flow { animation: none; }
 }

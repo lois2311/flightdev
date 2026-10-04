@@ -1,26 +1,24 @@
-import { useEffect } from 'react';
-import { startSmoothScroll } from './lib/motion';
 import HeaderNav from './components/HeaderNav';
 import HeroSection from './components/HeroSection';
-import VendraSimulatorSection from './components/VendraSimulatorSection';
+import VendraSection from './components/VendraSection';
 import EvolutionSection from './components/EvolutionSection';
-import FlightSystemSection from './components/FlightSystemSection';
+import ServicesSection from './components/ServicesSection';
 import FooterSection from './components/FooterSection';
-import FlightGuideOverlay from './components/FlightGuideOverlay';
+import { usePointerFx, useReveal } from './lib/fx';
 
 export default function App() {
-  useEffect(() => startSmoothScroll(), []);
+  useReveal();
+  usePointerFx();
   return (
     <>
       <HeaderNav />
       <main>
         <HeroSection />
-        <VendraSimulatorSection />
+        <VendraSection />
         <EvolutionSection />
-        <FlightSystemSection />
+        <ServicesSection />
       </main>
       <FooterSection />
-      <FlightGuideOverlay />
     </>
   );
 }
