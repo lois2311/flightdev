@@ -3,7 +3,13 @@ import PlaneMark from './PlaneMark';
 import CtaInner from './ui/CtaInner';
 import { useFrame } from '../lib/fx';
 
-const LINKS = [['#top', 'Inicio'], ['#vendra', 'Vendra'], ['#evolution', 'Cómo trabajamos'], ['#systems', 'Servicios']] as const;
+const LINKS = [
+  ['#top', 'Inicio'],
+  ['#vendra', 'Vendra'],
+  ['#ag-clean-ops', 'AG Clean Ops'],
+  ['#evolution', 'Cómo trabajamos'],
+  ['#systems', 'Servicios'],
+] as const;
 
 /** Floating glass capsule: light over the hero, dark below it. A paper plane under it tracks page progress. */
 export default function HeaderNav() {

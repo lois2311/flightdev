@@ -19,9 +19,10 @@ await page.addStyleTag({ content: 'html{scroll-behavior:auto!important}' });
 
 // Scroll in steps so scroll-linked scenes and reveal observers fire as they would for a person.
 const glide = async to => { const from = await page.evaluate(() => scrollY); for (let i = 1; i <= 12; i++) { await page.evaluate(v => scrollTo(0, v), from + (to - from) * i / 12); await page.waitForTimeout(60); } };
-for (const id of ['top', 'vendra', 'vendra-pos', 'evolution', 'systems', 'brief']) {
+for (const id of ['top', 'vendra', 'vendra-pos', 'ag-clean-ops', 'ag-clean-ops-demo', 'evolution', 'systems', 'brief']) {
   const y = await page.evaluate(id => {
     if (id === 'vendra-pos') { const s = document.querySelector('#vendra'); return s.offsetTop + s.offsetHeight - innerHeight; }
+    if (id === 'ag-clean-ops-demo') { const s = document.querySelector('#ag-clean-ops'); return s.offsetTop + s.offsetHeight - innerHeight; }
     const el = document.getElementById(id); return id === 'top' ? 0 : id === 'brief' ? 1e6 : el.getBoundingClientRect().top + scrollY - 40;
   }, id);
   await glide(y); await page.waitForTimeout(2500);
