@@ -1,3 +1,5 @@
+'use client';
+
 import { useRef, useState } from 'react';
 import PlaneMark from './PlaneMark';
 import { clamp01, reducedMotion, useFrame } from '../lib/fx';
@@ -38,7 +40,7 @@ export default function EvolutionSection() {
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="flex max-w-[720px] flex-col gap-[18px]">
             <p data-reveal className="eyebrow text-cielo-claro">CÓMO TRABAJAMOS</p>
-            <h2 data-reveal data-delay="80" className="h2">DE LA IDEA AL LANZAMIENTO, <span className="text-cielo">EN CINCO PASOS.</span></h2>
+            <h2 data-reveal data-delay="80" className="h2">De la idea al lanzamiento, <span className="text-cielo">en cinco pasos.</span></h2>
           </div>
           <span aria-hidden="true" className="tnum font-mono text-xs text-muted">AVANCE {String(Math.round(evo * 100)).padStart(3, '0')} %</span>
         </div>

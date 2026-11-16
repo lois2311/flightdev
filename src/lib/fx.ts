@@ -43,8 +43,8 @@ export function makeTrail() {
   };
 }
 
-/** Fades [data-reveal] blocks up as they enter; data-delay staggers them (ms). */
-export function useReveal() {
+/** Fades [data-reveal] blocks up as they enter; data-delay staggers them (ms). Re-scans when `key` (the route) changes. */
+export function useReveal(key?: string) {
   useEffect(() => {
     if (reducedMotion()) return;
     const io = new IntersectionObserver(es => es.forEach(e => {
@@ -59,8 +59,23 @@ export function useReveal() {
       an.onfinish = () => an.cancel();
     }), { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
     document.querySelectorAll<HTMLElement>('[data-reveal]').forEach(el => { el.style.opacity = '0'; io.observe(el); });
-    return () => io.disconnect();
-  }, []);
+    // Masked headlines and terrain drawings: CSS owns the motion, JS only flips the state attribute.
+    const once = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      once.unobserve(e.target);
+      const el = e.target as HTMLElement;
+      if (el.dataset.mask) el.dataset.mask = 'in'; else el.dataset.draw = 'in';
+    }), { threshold: 0.15 });
+    document.querySelectorAll<HTMLElement>('[data-mask]:not([data-mask=in]), [data-draw]:not([data-draw=in])').forEach(el => {
+      // Already on screen in its server state (page H1, hero terrain): leave it painted; hiding it now would only flash.
+      // A layout node left 'pending' by a previous route (footer terrain) still goes through the observer.
+      const r = el.getBoundingClientRect();
+      if (r.top < innerHeight && r.bottom > 0 && (el.dataset.mask || el.dataset.draw) === 'ready') return;
+      if (el.dataset.mask) el.dataset.mask = 'pending'; else el.dataset.draw = 'pending';
+      once.observe(el);
+    });
+    return () => { io.disconnect(); once.disconnect(); };
+  }, [key]);
 }
 
 /** Magnetic CTAs ([data-magnet]: lean, shine sweep, arrow cycle) and tilting cards ([data-tilt]). */

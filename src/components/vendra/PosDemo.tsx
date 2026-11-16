@@ -1,11 +1,13 @@
+'use client';
+
 import { useEffect, useRef, useState } from 'react';
 import VendraLogo from './VendraLogo';
 import { reducedMotion } from '../../lib/fx';
 
 const CODE = '6960';
-const TICKET = [{ name: 'VOLADOR 5 GOLPES', price: '$7.000' }, { name: 'METRALLETA 16 TIROS', price: '$50.000' }, { name: 'TORTA DIOSES 16 TIROS', price: '$50.000' }];
-const TOTAL = 107000;
-const PAYS = ['Efectivo', 'Transferencia', 'Datáfono'];
+const TICKET = [{ name: 'CINTA AISLANTE 18 MM', price: '$4.500' }, { name: 'TORNILLO DRYWALL X100', price: '$12.500' }, { name: 'BOMBILLO LED 9 W', price: '$8.000' }];
+const TOTAL = 25000;
+const PAYS = ['Efectivo', 'Nequi', 'Daviplata'];
 const money = (n: number) => '$' + Math.round(n).toLocaleString('es-CO');
 
 /** Scripted cashier screen: types the invoice code, loads the ticket, counts up the total and marks it paid — once, when it scrolls in. */
@@ -36,7 +38,7 @@ export default function PosDemo() {
   }, []);
 
   return (
-    <div ref={root} role="img" aria-label="Pantalla de caja de Vendra POS: la factura #6960 se busca por código, carga tres productos y se cobra $107.000 en efectivo." className="overflow-hidden rounded-2xl border border-borde bg-surf-400 text-hueso shadow-[0_40px_80px_-40px_rgba(0,0,0,.7)]">
+    <div ref={root} role="img" aria-label="Pantalla de caja de Vendra POS: la factura #6960 se busca por código, carga tres productos y se cobra $25.000 en efectivo." className="overflow-hidden rounded-2xl border border-borde bg-surf-400 text-hueso shadow-[0_40px_80px_-40px_rgba(0,0,0,.7)]">
       <div aria-hidden="true" className="flex flex-wrap items-center justify-between gap-4 border-b border-borde bg-superficie px-5 py-3.5">
         <div className="flex items-center gap-3">
           <VendraLogo size={22} />

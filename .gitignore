@@ -7,3 +7,8 @@ dist
 harness/out
 
 .vercel
+
+.next
+next-env.d.ts
+*.tsbuildinfo
+!.env.example

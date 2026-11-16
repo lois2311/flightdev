@@ -1,2 +1,5 @@
-// Set VITE_CONTACT_EMAIL at build time; the brief form opens a mailto: to this address.
-export const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL ?? 'hello@flightdev.dev';
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://flightdev.dev').replace(/\/$/, '');
+export const SITE_NAME = 'FlightDev';
+export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'hello@flightdev.dev';
+export const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? '';
+export const LOCALE = 'es_CO';

@@ -1,0 +1,146 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { ChevronDown, Menu, X } from 'lucide-react';
+import PlaneMark from '../PlaneMark';
+import CtaInner from '../ui/CtaInner';
+import { useFrame } from '@/lib/fx';
+
+const PRODUCTS = [
+  { href: '/productos/vendra', name: 'Vendra POS', text: 'Punto de venta y caja para comercios', code: 'FD-01', bar: 'bg-voltaje' },
+  { href: '/productos/fleettrack', name: 'FleetTrack Pro', text: 'Gestión de flotas y transporte', code: 'FD-02', bar: 'bg-cielo' },
+  { href: '/productos', name: 'Todo el portafolio', text: 'Productos y servicios de FlightDev' },
+];
+const SERVICES = [
+  { href: '/servicios/desarrollo-software', name: 'Software a la medida' },
+  { href: '/servicios/automatizacion', name: 'Automatización e integraciones' },
+];
+const LINKS = [
+  { href: '/soluciones', label: 'Soluciones' },
+  { href: '/casos-de-exito', label: 'Casos' },
+  { href: '/recursos', label: 'Recursos' },
+  { href: '/nosotros', label: 'Nosotros' },
+];
+
+type Menu = 'closed' | 'products' | 'mobile';
+
+/** Floating capsule nav. A paper plane on the dashed line under it tracks reading progress. */
+export default function SiteHeader() {
+  const path = usePathname();
+  const [menu, setMenu] = useState<{ path: string; open: Menu }>({ path, open: 'closed' });
+  // Menus close on navigation: state from a previous route is ignored instead of reset in an effect.
+  const open: Menu = menu.path === path ? menu.open : 'closed';
+  const toggle = (m: Menu) => setMenu({ path, open: open === m ? 'closed' : m });
+  const close = () => setMenu({ path, open: 'closed' });
+
+  const plane = useRef<SVGSVGElement>(null), fill = useRef<HTMLDivElement>(null), productsRef = useRef<HTMLDivElement>(null);
+  const productsBtn = useRef<HTMLButtonElement>(null), mobileBtn = useRef<HTMLButtonElement>(null);
+  const last = useRef({ sy: 0, dir: 1 });
+
+  useEffect(() => {
+    if (open === 'closed') return;
+    // Escape unmounts the panel; focus goes back to its toggle instead of dropping to <body>.
+    const key = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      setMenu({ path, open: 'closed' });
+      (open === 'products' ? productsBtn : mobileBtn).current?.focus();
+    };
+    const click = (e: MouseEvent) => { if (open === 'products' && !productsRef.current?.contains(e.target as Node)) setMenu({ path, open: 'closed' }); };
+    document.addEventListener('keydown', key);
+    document.addEventListener('click', click);
+    return () => { document.removeEventListener('keydown', key); document.removeEventListener('click', click); };
+  }, [open, path]);
+
+  useFrame(() => {
+    const sy = scrollY, p = Math.min(1, Math.max(0, sy / Math.max(1, document.documentElement.scrollHeight - innerHeight)));
+    const d = sy - last.current.sy;
+    if (Math.abs(d) > 0.5) last.current.dir = d < 0 ? -1 : 1;
+    last.current.sy = sy;
+    if (plane.current && fill.current) {
+      plane.current.style.left = p * 100 + '%';
+      plane.current.style.transform = `translateX(-7px) scaleX(${last.current.dir})`;
+      fill.current.style.width = p * 100 + '%';
+    }
+  });
+
+  const on = (href: string) => path === href || path.startsWith(href + '/');
+  const linkCls = (active: boolean) => `rounded-full px-3.5 py-2 transition-colors duration-200 ${active ? 'bg-white/10 text-hueso' : 'text-[#B6C4D8] hover:text-hueso'}`;
+
+  return (
+    <header className="fixed inset-x-[clamp(12px,3vw,40px)] top-3 z-50 mx-auto max-w-[1280px]">
+      <div className="relative flex items-center justify-between gap-3 rounded-full border border-cielo/20 bg-[rgba(12,28,52,.82)] py-[7px] pl-5 pr-[7px] text-hueso shadow-[0_14px_40px_-18px_rgba(5,12,26,.55)] backdrop-blur-[28px] backdrop-saturate-[1.6]">
+        <Link href="/" aria-label="FlightDev — inicio" className="flex items-center gap-2 text-inherit">
+          <PlaneMark size={26} fold="#7DB8FF" />
+          <span className="font-display text-lg font-semibold">flightdev</span>
+        </Link>
+
+        <nav aria-label="Principal" className="hidden items-center gap-0.5 text-sm font-medium min-[1080px]:flex">
+          <div ref={productsRef} className="relative">
+            <button ref={productsBtn} type="button" aria-expanded={open === 'products'} aria-controls="nav-products" onClick={() => toggle('products')}
+              className={`flex cursor-pointer items-center gap-1 ${linkCls(on('/productos'))}`}>
+              Productos <ChevronDown size={14} aria-hidden="true" className={`transition-transform ${open === 'products' ? 'rotate-180' : ''}`} />
+            </button>
+            {open === 'products' && (
+              <div id="nav-products" className="absolute left-0 top-[calc(100%+14px)] w-[540px] overflow-hidden rounded-[22px] border border-borde bg-superficie shadow-[0_30px_60px_-24px_rgba(0,0,0,.7)]">
+                <ul className="m-0 grid list-none grid-cols-2 gap-2 p-2">
+                  {PRODUCTS.slice(0, 2).map(p => (
+                    <li key={p.href}>
+                      <Link href={p.href} onClick={close} aria-current={on(p.href) ? 'page' : undefined} className="relative flex h-full flex-col gap-2 overflow-hidden rounded-2xl border border-borde bg-noche/60 p-4 pt-5 transition-colors hover:border-cielo/40 hover:bg-noche">
+                        <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-[3px] ${p.bar}`} />
+                        <span className="font-mono text-[10px] tracking-[.14em] text-muted">{p.code}</span>
+                        <span className="font-display text-lg font-semibold text-hueso">{p.name}</span>
+                        <span className="text-[13px] leading-snug text-muted">{p.text}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex items-center justify-between gap-4 border-t border-borde px-5 py-3 text-[13px]">
+                  <span className="flex gap-4">
+                    {SERVICES.map(sv => <Link key={sv.href} href={sv.href} onClick={close} className="text-niebla hover:text-hueso">{sv.name}</Link>)}
+                  </span>
+                  <Link href="/productos" onClick={close} className="whitespace-nowrap font-semibold text-cielo-claro hover:underline">Portafolio →</Link>
+                </div>
+              </div>
+            )}
+          </div>
+          {LINKS.map(l => <Link key={l.href} href={l.href} aria-current={on(l.href) ? 'page' : undefined} className={linkCls(on(l.href))}>{l.label}</Link>)}
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <Link href="/contacto" data-magnet data-track="click_contact" data-track-label="header" className="pill gap-2.5 bg-[linear-gradient(180deg,#C8EC83,#B4E854)] py-[5px] pl-[18px] pr-[5px] text-[15px] text-noche shadow-[inset_0_1px_0_rgba(255,255,255,.55)] max-[420px]:pl-3.5">
+            <CtaInner label="Hablemos" shine="rgba(255,255,255,.6)" icon={15} arrowClass="size-[30px] bg-noche text-voltaje" />
+          </Link>
+          <button ref={mobileBtn} type="button" aria-expanded={open === 'mobile'} aria-controls="nav-mobile" aria-label={open === 'mobile' ? 'Cerrar menú' : 'Abrir menú'}
+            onClick={() => toggle('mobile')}
+            className="grid size-10 cursor-pointer place-items-center rounded-full border border-white/15 text-hueso min-[1080px]:hidden">
+            {open === 'mobile' ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
+
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-7 -bottom-[11px] h-3">
+          <div className="absolute inset-x-0 top-1.5 border-t border-dashed border-cielo/35" />
+          <div ref={fill} className="absolute left-0 top-1.5 h-px w-0 bg-cielo" />
+          <svg ref={plane} width="14" height="14" viewBox="0 0 100 100" className="absolute left-0 top-0 transition-transform duration-[350ms]">
+            <polygon points="4,50 96,8 40,64" fill="#2F8CFF" /><polygon points="40,64 96,8 54,94" fill="#7DB8FF" />
+          </svg>
+        </div>
+      </div>
+
+      {open === 'mobile' && (
+        <nav id="nav-mobile" aria-label="Principal móvil" className="mt-4 max-h-[calc(100svh-96px)] overflow-y-auto rounded-3xl border border-borde bg-superficie p-3 shadow-[0_30px_60px_-24px_rgba(0,0,0,.7)] min-[1080px]:hidden">
+          <p className="m-0 px-4 pb-1 pt-2 font-mono text-[11px] tracking-[.12em] text-muted">PRODUCTOS</p>
+          {PRODUCTS.map(p => (
+            <Link key={p.href} href={p.href} onClick={close} className="flex flex-col rounded-2xl px-4 py-3 hover:bg-white/5">
+              <span className="font-semibold">{p.name}</span><span className="text-[13px] text-muted">{p.text}</span>
+            </Link>
+          ))}
+          <div className="my-2 border-t border-borde" />
+          {LINKS.map(l => <Link key={l.href} href={l.href} onClick={close} className="block rounded-2xl px-4 py-3 font-semibold hover:bg-white/5">{l.label}</Link>)}
+          <Link href="/contacto" onClick={close} className="mt-2 block rounded-2xl bg-voltaje px-4 py-3.5 text-center font-semibold text-noche">Habla con nuestro equipo</Link>
+        </nav>
+      )}
+    </header>
+  );
+}

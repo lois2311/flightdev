@@ -1,3 +1,5 @@
+'use client';
+
 import { useRef } from 'react';
 import PlaneMark from './PlaneMark';
 import CtaInner from './ui/CtaInner';
@@ -60,7 +62,7 @@ export default function AgCleanOpsSection() {
               PROYECTO REAL // AG CLEAN OPS
             </p>
             <h2 data-reveal data-delay="80" className="h2">
-              PLATAFORMA SAAS & MOTOR DE RESERVAS <span className="text-cielo">EN TIEMPO REAL.</span>
+              Plataforma SaaS y motor de reservas <span className="text-cielo">en producción.</span>
             </h2>
             <p data-reveal data-delay="160" className="m-0 max-w-[620px] leading-[1.65] text-muted [text-wrap:pretty]">
               Diseñamos y programamos la plataforma digital completa para{' '}
