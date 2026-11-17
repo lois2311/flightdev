@@ -41,7 +41,7 @@ CRM-1…CRM-6 en `FLIGHTDEV_CRM_ARCHITECTURE.md`.
 | QA-2 | ~~Capturas en los 7 anchos~~ hecho en la sesión visual (ver `FLIGHTDEV_VISUAL_QA_REPORT.md`); pendiente: revisión humana de las 133 capturas de primer viewport |
 | QA-3 | Medir Core Web Vitals en Vercel (Speed Insights) y Lighthouse móvil |
 | QA-4 | Content-Security-Policy con nonces |
-| PERF-1 | Pausar los bucles `requestAnimationFrame` del avión del hero cuando el hero sale de pantalla (IntersectionObserver) |
+| PERF-1 | ~~Pausar los bucles `requestAnimationFrame` del avión del hero~~ resuelto: el hero ya no tiene bucle rAF (erradicación de patrones genéricos) |
 
 ## Dirección visual (sesión de transformación)
 

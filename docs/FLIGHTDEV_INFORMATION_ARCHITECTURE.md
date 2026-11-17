@@ -33,14 +33,14 @@ Navegación principal: Productos (menú con Vendra, FleetTrack, Portafolio) · S
 
 | Decisión | Valor |
 |---|---|
-| Superficies | `noche #0A1428` base, `#0B1730` banda alterna, `superficie #10243F` paneles, `borde #1E314F` |
+| Superficies | `noche #0A1428` base, `vuelo #0C2340` banda alterna, `superficie #10243F` paneles, `borde #1E314F` |
 | Texto | `hueso #EEF2F7` títulos, `niebla #C9D4E3` cuerpo, `muted #93A4BD` secundario (todos ≥ 4.5:1 sobre noche) |
-| Acento de marca | `cielo #2F8CFF` / `cielo-claro #7DB8FF` — enlaces, énfasis de titulares, FleetTrack |
+| Acento de marca | `cielo #2F8CFF` / `cielo-claro #7DB8FF` : enlaces, relieve, FleetTrack (nunca media frase de un titular) |
 | Acento reservado | `voltaje #B4E854` — **solo** la acción comercial primaria (y la identidad de Vendra) |
-| Tipografía | Outfit (display, 600–700, tracking negativo) · Figtree (cuerpo) · JetBrains Mono (etiquetas, datos) — vía `next/font` |
-| Escala | H1 `clamp(2.3rem,5vw,4.4rem)`, H2 `.h2` `clamp(2rem,4.4vw,3.8rem)` o `clamp(1.9rem,3.4vw,3rem)` en páginas internas, cuerpo 16–19 px |
-| Forma | CTA en píldora con disco de flecha (`Cta` / `CtaInner`), paneles 18–28 px de radio, listas editoriales con reglas en vez de muros de tarjetas |
-| Motion | Reveal al entrar (una vez), CTA magnéticos, inclinación en tarjetas de capacidades, avión del hero; todo desactivado con `prefers-reduced-motion` |
+| Tipografía | Archivo condensada (display) y a ancho normal (cuerpo) · IBM Plex Mono (etiquetas, datos), vía `next/font` |
+| Escala | H1 `clamp(2.4rem,5.4vw,4.8rem)`, H2 `.h2` `clamp(2rem,4.4vw,3.8rem)` o `clamp(1.9rem,3.4vw,3rem)` en páginas internas, cuerpo 16–19 px |
+| Forma | Botones rectos de 3 px (`Cta` / `.btn`), filetes de 1 px en vez de tarjetas, listas editoriales y tablas de datos en mono |
+| Motion | Solo la ruta discontinua y el relieve que se dibuja; ambos se detienen con `prefers-reduced-motion` |
 
 Componentes: `ui/Cta` (variantes primary/secondary/navy/paper), `site/PageHero`, `site/Breadcrumbs`, `site/Faq` (`<details>` nativo), `site/CtaBand`, `site/LegalPage`, `leads/LeadForm`, `leads/LeadSection`, `blog/PostList`.
 

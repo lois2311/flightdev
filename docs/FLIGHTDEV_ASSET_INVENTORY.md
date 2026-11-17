@@ -22,8 +22,6 @@ Prompts preparados, listos para reutilizar con un plan Basic: vista aérea de un
 | Lectura de cabina | `HeroSection.tsx` + `art/LocalTime.tsx` | HTML | < 1 KB | Hero del home |
 | Viñeta de caja Vendra | `showcase/Vignettes.tsx` | HTML/CSS | < 2 KB | Vitrina del home, hero de Vendra |
 | Viñeta de app del conductor | `showcase/Vignettes.tsx` | HTML/CSS | < 2 KB | Vitrina del home, hero de FleetTrack |
-| Diagrama de capas / flujo | `home/CapabilitiesSection.tsx` | HTML/CSS | < 1 KB | Bento de capacidades |
-| Tablero de salidas | `home/DepartureBoard.tsx` | HTML/CSS | < 2 KB | Home |
 | Avión de papel (símbolo) | `PlaneMark.tsx` | SVG | < 1 KB | Global |
 | Logo Vendra | `vendra/VendraLogo.tsx` | SVG | — | Productos |
 | Imagen Open Graph | `app/opengraph-image.tsx` | PNG generado en build, 1200×630 | — | Redes sociales |

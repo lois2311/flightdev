@@ -41,10 +41,13 @@
 
 /* Font families come from next/font (self-hosted, no layout shift); see app/layout.tsx. */
 @theme inline {
-  --font-display: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 }
+
+/* Display = Archivo condensed (chart and signage lettering); body = same family at normal width. */
+.font-display, .h2, .prose-fd h2, .prose-fd h3 { font-variation-settings: 'wdth' 72; }
 
 html { background: var(--color-noche); scroll-behavior: smooth; scroll-padding-top: 104px; }
 body {
@@ -63,7 +66,7 @@ body {
   /* Instrument-panel button: squared, solid, no glow. Lime stays reserved for the primary commercial action. */
   .btn {
     display: inline-flex; flex-shrink: 0; align-items: center; justify-content: center; gap: .6em; min-height: 44px; white-space: nowrap;
-    border-radius: 3px; padding: 0 20px; font-family: var(--font-display); font-weight: 600; font-size: 15px;
+    border-radius: 3px; padding: 0 20px; font-family: var(--font-body); font-weight: 600; font-size: 15px;
     transition: background-color var(--dur-fast), border-color var(--dur-fast), color var(--dur-fast);
   }
   .eyebrow { margin: 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: .12em; }

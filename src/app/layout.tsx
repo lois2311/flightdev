@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Figtree, JetBrains_Mono, Outfit } from 'next/font/google';
+import { Archivo, IBM_Plex_Mono } from 'next/font/google';
 import SiteHeader from '@/components/site/SiteHeader';
 import SiteFooter from '@/components/site/SiteFooter';
 import ClientFx from '@/components/site/ClientFx';
@@ -9,9 +9,9 @@ import { LOCALE, SITE_NAME, SITE_URL } from '@/config';
 import { organizationLd, websiteLd } from '@/lib/seo';
 import './globals.css';
 
-const outfit = Outfit({ subsets: ['latin'], weight: ['400', '500', '600', '700'], variable: '--font-outfit', display: 'swap' });
-const figtree = Figtree({ subsets: ['latin'], weight: ['400', '500', '600'], variable: '--font-figtree', display: 'swap' });
-const mono = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '500', '700'], variable: '--font-jetbrains', display: 'swap' });
+// One variable family for display (condensed, like chart and signage lettering) and body (normal width), plus a plain mono for instruments.
+const archivo = Archivo({ subsets: ['latin'], axes: ['wdth'], variable: '--font-archivo', display: 'swap' });
+const mono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-plex-mono', display: 'swap' });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -28,7 +28,7 @@ export const viewport: Viewport = { themeColor: '#0A1428', colorScheme: 'dark' }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es-CO" className={`${outfit.variable} ${figtree.variable} ${mono.variable}`}>
+    <html lang="es-CO" className={`${archivo.variable} ${mono.variable}`}>
       <body>
         <a href="#contenido" className="sr-only z-[70] rounded-[3px] bg-voltaje px-4 py-2 font-semibold text-noche focus:not-sr-only focus:fixed focus:left-4 focus:top-4">Saltar al contenido</a>
         <JsonLd data={[organizationLd(), websiteLd()]} />

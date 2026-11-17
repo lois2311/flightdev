@@ -16,7 +16,7 @@ export default function HeroSection() {
 
       <div className="relative mx-auto grid w-full max-w-[1280px] items-end gap-x-16 gap-y-10 lg:grid-cols-[minmax(0,1fr)_320px]">
         <div className="flex min-w-0 flex-col gap-7">
-          <h1 className="m-0 max-w-[15ch] font-display text-[clamp(2.6rem,6vw,5.4rem)] font-bold leading-[.95] tracking-[-.01em] text-vuelo [text-wrap:balance]">
+          <h1 className="m-0 max-w-[15ch] font-display text-[clamp(3rem,7.4vw,6.6rem)] font-bold leading-[.95] tracking-[-.01em] text-vuelo [text-wrap:balance]">
             Software para operar comercios, flotas y procesos.
           </h1>
           <p className="m-0 max-w-[54ch] text-[clamp(16px,1.3vw,19px)] leading-[1.6] text-vuelo/85 [text-wrap:pretty]">

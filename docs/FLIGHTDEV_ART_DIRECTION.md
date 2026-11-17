@@ -1,60 +1,70 @@
-# FlightDev — Dirección de arte
+# FlightDev: dirección de arte
 
 ## Concepto: "Plan de vuelo sobre la cordillera"
 
 FlightDev nace en Manizales, sobre la Cordillera Central. El nombre ya habla de vuelo y el símbolo es un avión de papel. La dirección de arte une las dos cosas: **una carta aeronáutica dibujada sobre el relieve andino**. Precisión de instrumento (coordenadas, códigos de ruta, lecturas en mono) sobre un territorio real (las cordilleras como trazo).
 
-Sensación objetivo: **precisión y confianza**. Es una empresa que opera lo que construye, no una agencia de moda.
+Sensación objetivo: **precisión y confianza**. Es una empresa que opera lo que construye.
 
-## Principios extraídos de las referencias (no copiados)
+## De dónde salen los principios
+
+Las referencias son objetos del mundo del vuelo y del territorio, no sitios web de otras empresas de software. Copiar la estética de las landings de moda (fondo oscuro, brillo que sigue al cursor, titulares a dos colores) es justo lo que hace que un sitio se vea genérico.
 
 | Referencia | Principio tomado | Cómo aparece aquí |
 |---|---|---|
-| Linear, Vercel | Oscuro profundo, un solo acento de señal, tipografía grande con *tracking* negativo | Fondo `noche`, `cielo` como señal, H1/H2 en Outfit 700 a −0.02/−0.035em |
-| Stripe | Ilustrar el producto con interfaz dibujada, no con fotos de stock | Viñetas de Vendra (caja) y FleetTrack (app del conductor) hechas en código |
-| Studio Freight, Locomotive | Pausas editoriales: una frase enorme y aire alrededor | Banda "Manifiesto" del home |
-| Raycast, Resend | Detalle de instrumento: mono pequeño, códigos, estados | Tablero de salidas, lectura de cabina del hero, códigos FD-01/FD-02 |
-| Apple | Un solo foco por pantalla; el producto como protagonista del primer viewport | Heroes de producto con la viñeta a la derecha del H1 |
-| Lusion, Active Theory | Arte generativo con significado propio, no partículas decorativas | Relieve generativo determinista con semilla por ruta |
+| Cartas aeronáuticas (VFR, Jeppesen) | Líneas finas, rótulos condensados, datos en mono, nada decorativo | Listas sobre filetes en lugar de tarjetas; tablas de datos en mono; titulares condensados |
+| Señalética de aeropuerto | Un color reservado para la acción; formas rectas | `voltaje` solo en la acción comercial principal; botones rectos de radio 3 px |
+| Paneles de instrumentos | Lecturas con datos reales, sin animación de relleno | Base, posición y hora local reales en el hero |
+| Relieve de la Cordillera Central | El territorio como trazo | Relieve generativo determinista con semilla por ruta |
 
 ## Lenguaje gráfico
 
-- **Relieve** (`components/art/Terrain.tsx`): crestas apiladas con relleno opaco (*ridgeline*), trazo `cielo` con opacidad creciente hacia el frente. Cada ruta usa su propia semilla: el sitio es un vuelo continuo sobre tramos distintos de cordillera.
-- **Ruta y *waypoints***: línea discontinua animada (`flow`) y rombos con etiqueta en mono. Solo aparecen donde la ruta significa algo; por ejemplo, en el hero es el portafolio de la empresa.
-- **Instrumentos**: etiquetas en JetBrains Mono, mayúsculas, *tracking* 0.12–0.14em. Muestran datos verificables: coordenadas reales de Manizales y hora local real (America/Bogota), nunca métricas inventadas.
-- **Avión de papel**: firma de marca en el hero, en el progreso de lectura del header y en los cierres.
-- **Wordmark contorneado** en el footer: cierre editorial de cada página.
+- **Relieve** (`components/art/Terrain.tsx`): crestas apiladas con relleno opaco (*ridgeline*), trazo `cielo` con opacidad creciente hacia el frente. Cada ruta usa su propia semilla: el sitio es un vuelo continuo sobre tramos distintos de cordillera. Se dibuja una vez al entrar en pantalla.
+- **Ruta y *waypoints***: línea discontinua animada (`flow`) y rombos con etiqueta en mono. Es el único movimiento ambiental del sitio y solo aparece donde la ruta significa algo.
+- **Filetes**: la estructura se hace con líneas de 1 px (`borde`), no con tarjetas, sombras ni degradados.
+- **Instrumentos**: IBM Plex Mono, mayúsculas, *tracking* 0.06–0.12em. Muestran datos verificables (coordenadas, hora local, cliente, estado), nunca métricas inventadas.
+- **Avión de papel**: firma de marca en el hero, en el progreso de lectura del header y en el cierre comercial.
 
 ## Color
 
 | Token | Uso |
 |---|---|
 | `noche` #0A1428 | Fondo base |
-| `vuelo` #0C2340 / `superficie` #10243F | Planos elevados |
-| `cielo` #2F8CFF / `cielo-claro` #7DB8FF | Señal: acentos de titular, relieve, enlaces |
+| `vuelo` #0C2340 / `superficie` #10243F | Planos para cambiar de ritmo entre secciones |
+| `cielo` #2F8CFF / `cielo-claro` #7DB8FF | Señal: enlaces, relieve, ruta. Nunca para pintar media frase de un titular |
 | `voltaje` #B4E854 | **Solo** la acción comercial principal y la identidad de Vendra |
 | `hueso` / `niebla` / `muted` | Texto principal / secundario / terciario |
-| Cielo claro (gradiente `#DCEBFF → #F6F8FB`) | Solo en el hero del home: el despegue desde el cielo diurno hacia la noche del resto del sitio |
+| `nube` #F6F8FB | Solo el hero del home: el cielo diurno antes de la noche del resto del sitio |
 
-Las identidades de producto se distinguen por el acento: Vendra en lima, FleetTrack en azul. El relieve de la landing de Vendra usa el trazo lima.
+Las identidades de producto se distinguen por el acento: Vendra en lima, FleetTrack en azul.
 
 ## Tipografía
 
-Outfit (display, 600–700) · Figtree (texto, 400–600) · JetBrains Mono (instrumentos). Escala en `clamp()`; el manifiesto llega a 6rem. Titulares con `text-wrap: balance` y párrafos con `pretty`.
+Archivo, una sola familia variable: **condensada** (`wdth` 72) en titulares, como la rotulación de cartas y señalética, y a ancho normal en el texto. IBM Plex Mono para instrumentos. Escala en `clamp()`; titulares con `text-wrap: balance` y párrafos con `pretty`.
+
+## Movimiento
+
+Dos cosas se mueven: la ruta discontinua y el relieve al dibujarse. Nada sigue al cursor, nada aparece con *fade-in* al hacer scroll y nada late. Con `prefers-reduced-motion` ambas se detienen. Las demos de producto (caja de Vendra, cotizador de AG Clean Ops) sí se animan, porque muestran cómo funciona el producto.
 
 ## Imagen, video e iconografía
 
-- **Fotografía/IA:** no hay fotografía en el sitio. Se intentó generar imágenes con Higgsfield, pero el plan disponible no lo permite (ver `FLIGHTDEV_ASSET_INVENTORY.md`). La decisión fue no usar fotos de stock: el arte generativo en SVG es propio, pesa unos pocos KB y nunca simula ser una foto real.
+- **Fotografía/IA:** no hay fotografía en el sitio. La decisión fue no usar fotos de stock: el arte generativo en SVG es propio, pesa unos pocos KB y nunca simula ser una foto real (ver `FLIGHTDEV_ASSET_INVENTORY.md`).
 - **Interfaz de producto:** viñetas dibujadas en código, rotuladas siempre "Ilustración con datos de ejemplo". Las capturas reales quedan en el backlog (CONT-2).
-- **Video:** ninguno. No hay herramienta de generación disponible, y un video en el hero comprometería el LCP en móvil sin aportar información.
-- **Iconos:** lucide-react con trazo 1.6–2.2, dentro de contenedores redondeados con borde `cielo/25`.
+- **Video:** ninguno. Un video en el hero comprometería el LCP en móvil sin aportar información.
+- **Iconos:** lucide-react, en línea con el texto. Sin cajas redondeadas alrededor.
 
 ## Lo que se evita a propósito
 
-Gradientes púrpura/rosa, glassmorphism generalizado (solo el header usa desenfoque, por legibilidad sobre contenido), partículas, blobs, el esqueleto hero → 3 tarjetas → testimonios → precios, testimonios o logos de clientes sin autorización.
+Lo vigila `src/design/slop.test.ts`: el conteo de cada patrón solo puede bajar.
+
+- Titulares a dos colores, texto con degradado, guiones largos y frases "no es X, es Y".
+- Brillo que sigue al cursor, botones magnéticos o con destello, tarjetas que se inclinan, *fade-in* uniforme al hacer scroll, titulares que suben desde una máscara, puntos que laten, cintas que se desplazan solas.
+- Header de cápsula flotante con vidrio, rejillas con máscara radial, brillos ambientales, esquineros "tech".
+- Botones en píldora con disco de flecha, iconos dentro de cajas redondeadas, grillas de tres tarjetas numeradas 01/02/03.
+- Gradientes púrpura/rosa, partículas, blobs, el esqueleto hero → 3 tarjetas → testimonios → precios, testimonios o logos de clientes sin autorización.
 
 ## Diferenciadores (máximo tres)
 
 1. **Relieve generativo con semilla por ruta**: ninguna página repite montaña y todas comparten lenguaje.
 2. **Instrumentos con datos reales**: coordenadas de la base y hora local de Colombia en vivo, en lugar de métricas de relleno.
-3. **El producto en el primer viewport**: viñetas de interfaz en los heroes de producto y en la vitrina del home.
+3. **Rotulación de carta**: titulares condensados, filetes y datos en mono, en lugar de tarjetas y brillos.
