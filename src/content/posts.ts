@@ -110,8 +110,8 @@ export const POSTS: Post[] = [
       { h2: 'Cómo reducir el riesgo' },
       { p: 'El riesgo de un proyecto a la medida no está en la tecnología sino en construir algo que nadie usa. Tres prácticas lo reducen de forma drástica:' },
       { ul: [
-        'Empezar por el problema más costoso y entregar una primera versión útil en semanas, no en meses.',
-        'Ver avances funcionando cada semana, no documentos de avance.',
+        'Empezar por el problema más costoso y entregar una primera versión útil en pocas semanas.',
+        'Ver software funcionando cada semana.',
         'Diseñar las pantallas con las personas que las van a usar, en su contexto real de trabajo.',
       ] },
       { h2: 'SaaS o desarrollo propio' },

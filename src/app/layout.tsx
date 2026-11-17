@@ -15,7 +15,7 @@ const mono = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '500', '700'],
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: 'FlightDev — Plataformas SaaS y software empresarial en Colombia', template: '%s | FlightDev' },
+  title: { default: 'FlightDev | Plataformas SaaS y software empresarial en Colombia', template: '%s | FlightDev' },
   description: 'FlightDev desarrolla plataformas SaaS y soluciones tecnológicas para empresas en Colombia: Vendra POS, FleetTrack Pro, software a la medida y automatización de procesos.',
   applicationName: SITE_NAME,
   icons: { icon: '/favicon.svg' },

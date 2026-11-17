@@ -13,7 +13,7 @@ const PRODUCTS = [
   { href: '/productos', name: 'Todo el portafolio', text: 'Productos y servicios de FlightDev' },
 ];
 const SERVICES = [
-  { href: '/servicios/desarrollo-software', name: 'Software a la medida' },
+  { href: '/servicios/desarrollo-software', name: 'Desarrollo de software' },
   { href: '/servicios/automatizacion', name: 'Automatización e integraciones' },
 ];
 const LINKS = [

@@ -76,7 +76,7 @@ export const AUTOMATION: Service = {
   faqs: [
     { q: '¿Qué sistemas pueden integrar?', a: 'Cualquier sistema que exponga una API o permita intercambiar archivos de forma confiable. En el diagnóstico revisamos qué ofrece cada uno.' },
     { q: '¿Qué pasa si una integración falla?', a: 'Diseñamos cada integración con registro de errores, reintentos y alertas, para que una falla se detecte y se corrija sin perder datos.' },
-    { q: '¿Necesito cambiar mis herramientas actuales?', a: 'Normalmente no. El objetivo es que tus herramientas trabajen juntas, no reemplazarlas.' },
+    { q: '¿Necesito cambiar mis herramientas actuales?', a: 'Normalmente no. Conectamos las herramientas que ya usas para que trabajen juntas.' },
   ],
   product: 'automation',
 };

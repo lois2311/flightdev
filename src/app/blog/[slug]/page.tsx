@@ -41,7 +41,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             <span className="tnum font-mono text-xs text-muted">FlightDev · <time dateTime={post.published}>{formatDate(post.published)}</time> · {post.minutes} min de lectura</span>
           </header>
           <div className="prose-fd">{post.body.map(render)}</div>
-          <Link href={post.related.href} className="w-fit rounded-[3px] border border-cielo/40 px-5 py-3 font-semibold text-cielo-claro hover:border-cielo">{post.related.label} →</Link>
+          <Link href={post.related.href} className="w-fit rounded-[3px] border border-cielo/40 px-5 py-3 font-semibold text-cielo-claro hover:border-cielo">{post.related.label}</Link>
         </div>
       </article>
       {more.length > 0 && (

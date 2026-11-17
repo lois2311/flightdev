@@ -23,9 +23,9 @@ export default function ProductsPage() {
         <div className="mx-auto flex max-w-[1280px] flex-wrap items-center justify-between gap-6">
           <div className="flex max-w-[640px] flex-col gap-3">
             <h2 id="medida" className="m-0 font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold text-hueso">¿Tu operación no encaja en ninguno de los dos?</h2>
-            <p className="m-0 leading-[1.6] text-niebla">También desarrollamos software a la medida y automatizamos procesos con la misma ingeniería que usamos en nuestros productos.</p>
+            <p className="m-0 leading-[1.6] text-niebla">También desarrollamos software y automatizamos procesos con el mismo equipo que mantiene nuestros productos.</p>
           </div>
-          <Link href="/soluciones" className="font-semibold text-cielo-claro underline-offset-4 hover:underline">Ver soluciones →</Link>
+          <Link href="/soluciones" className="font-semibold text-cielo-claro underline-offset-4 hover:underline">Ver soluciones</Link>
         </div>
       </section>
       <CtaBand title="Agenda una demostración del producto que te interesa." text="Te mostramos el producto con un escenario parecido al tuyo y te decimos con claridad si encaja." />

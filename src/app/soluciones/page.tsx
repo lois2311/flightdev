@@ -32,7 +32,7 @@ export default function SolutionsPage() {
               <li key={b.need} className="grid gap-3 border-b border-borde py-7 md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)_200px] md:items-center md:gap-10">
                 <h3 className="m-0 font-display text-xl font-semibold text-hueso">{b.need}</h3>
                 <p className="m-0 leading-[1.6] text-niebla">{b.text}</p>
-                <Link href={b.href} className="font-semibold text-cielo-claro underline-offset-4 hover:underline md:text-right">{b.cta} →</Link>
+                <Link href={b.href} className="font-semibold text-cielo-claro underline-offset-4 hover:underline md:text-right">{b.cta}</Link>
               </li>
             ))}
           </ul>

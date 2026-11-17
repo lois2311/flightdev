@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { CONTACT_EMAIL, LOCALE, SITE_NAME, SITE_URL } from '@/config';
 
 export const abs = (path: string) => SITE_URL + (path === '/' ? '' : path);
-const OG_IMAGE = { url: '/opengraph-image', width: 1200, height: 630, alt: 'FlightDev — Plataformas SaaS y software empresarial en Colombia' };
+const OG_IMAGE = { url: '/opengraph-image', width: 1200, height: 630, alt: 'FlightDev | Plataformas SaaS y software empresarial en Colombia' };
 
 /** Per-page metadata: unique title, description, canonical, Open Graph and Twitter card. */
 export function pageMetadata({ title, description, path, type = 'website', absoluteTitle = false }: {

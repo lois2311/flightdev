@@ -15,7 +15,7 @@ export default function AboutPage() {
     <>
       <PageHero
         crumbs={[{ name: 'Nosotros', path: '/nosotros' }]}
-        title={<>Una empresa de productos, no una fábrica de páginas.</>}
+        title={<>Hacemos productos y los mantenemos.</>}
         lead="FlightDev nació en Manizales para construir software que las empresas usen todos los días. Hoy operamos productos propios y desarrollamos soluciones para otras empresas con la misma disciplina."
       />
       <section aria-labelledby="vision" className="gutter border-t border-borde bg-noche py-24">
@@ -26,7 +26,7 @@ export default function AboutPage() {
           </div>
           <div className="flex flex-col gap-4">
             <h2 className="h2 text-[clamp(1.9rem,3.4vw,3rem)]">Enfoque</h2>
-            <p className="m-0 text-lg leading-[1.7] text-niebla">Construimos productos para industrias concretas —hoy comercio y transporte— y aplicamos lo aprendido al desarrollo a la medida y a la automatización. Producto y servicio se alimentan entre sí.</p>
+            <p className="m-0 text-lg leading-[1.7] text-niebla">Construimos productos para industrias concretas, hoy comercio y transporte, y usamos lo aprendido en los desarrollos y automatizaciones para clientes.</p>
           </div>
         </div>
       </section>

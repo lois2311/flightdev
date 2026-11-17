@@ -112,7 +112,7 @@ export default function LeadForm({ product, formName = 'contacto', title }: { pr
 
   const isVendra = values.product === 'vendra', isFleet = values.product === 'fleettrack';
   const openEnded = values.product !== '' && !isVendra && !isFleet;
-  const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('Solicitud desde flightdev — ' + (PRODUCTS.find(p => p.value === values.product)?.label ?? 'contacto'))}&body=${encodeURIComponent(values.message)}`;
+  const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('Solicitud desde flightdev: ' + (PRODUCTS.find(p => p.value === values.product)?.label ?? 'contacto'))}&body=${encodeURIComponent(values.message)}`;
 
   return (
     <form ref={formRef} onSubmit={submit} onFocus={start} noValidate aria-busy={status.kind === 'submitting'}

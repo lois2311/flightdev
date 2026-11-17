@@ -17,7 +17,7 @@ export default function PrivacyPage() {
       <p>Esta política explica cómo FlightDev trata los datos personales que recibe a través de este sitio web, en cumplimiento de la Ley 1581 de 2012, el Decreto 1074 de 2015 y demás normas colombianas sobre protección de datos personales.</p>
 
       <h2>1. Responsable del tratamiento</h2>
-      <p><strong>FlightDev</strong> — razón social y NIT: [pendiente]. Domicilio: Manizales, Caldas, Colombia. Dirección de notificaciones: [pendiente]. Correo para asuntos de datos personales: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+      <p><strong>FlightDev</strong>. Razón social y NIT: [pendiente]. Domicilio: Manizales, Caldas, Colombia. Dirección de notificaciones: [pendiente]. Correo para asuntos de datos personales: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
 
       <h2>2. Datos que recolectamos</h2>
       <ul>
