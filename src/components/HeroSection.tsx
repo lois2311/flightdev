@@ -11,7 +11,7 @@ const CLIP = 'polygon(0 0,100% 0,100% calc(100% - 112px),calc(58% + 240px) calc(
 /** Home opening on the light "sky". Static on purpose: the only motion is the dashed route flowing toward the plane. */
 export default function HeroSection() {
   return (
-    <section id="top" className="gutter relative z-[2] box-border flex min-h-[min(100svh,880px)] items-center overflow-hidden bg-nube pb-[180px] pt-[120px] text-vuelo" style={{ clipPath: CLIP }}>
+    <section id="top" className="gutter relative z-[2] box-border flex min-h-[min(100svh,880px)] items-center overflow-hidden bg-nube pb-[clamp(180px,17vw,300px)] pt-[120px] text-vuelo" style={{ clipPath: CLIP }}>
       <Terrain seed={1105} lines={18} height={300} fill="#F6F8FB" stroke="#2F8CFF" waypoints={ROUTE} className="absolute inset-x-0 bottom-0 h-[clamp(150px,19vw,280px)] max-lg:[&>span]:hidden" />
 
       <div className="relative mx-auto grid w-full max-w-[1280px] items-end gap-x-16 gap-y-10 lg:grid-cols-[minmax(0,1fr)_320px]">
