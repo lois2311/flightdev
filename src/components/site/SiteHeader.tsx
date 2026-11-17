@@ -34,13 +34,15 @@ export default function SiteHeader() {
   const toggle = (m: Menu) => setMenu({ path, open: open === m ? 'closed' : m });
   const close = () => setMenu({ path, open: 'closed' });
 
-  const plane = useRef<SVGSVGElement>(null), fill = useRef<HTMLDivElement>(null), productsRef = useRef<HTMLDivElement>(null);
+  const plane = useRef<HTMLSpanElement>(null), bar = useRef<HTMLDivElement>(null), actions = useRef<HTMLDivElement>(null), fill = useRef<HTMLDivElement>(null), productsRef = useRef<HTMLDivElement>(null);
   const productsBtn = useRef<HTMLButtonElement>(null), mobileBtn = useRef<HTMLButtonElement>(null);
   const last = useRef({ sy: 0, dir: 1 });
   // Waypoints of the page's flight plan ([data-waypoint] sections), as fractions of the scroll range.
   const [marks, setMarks] = useState<{ path: string; list: { at: number; label: string }[] }>({ path, list: [] });
   const list = marks.path === path ? marks.list : [];
   const label = useRef<HTMLSpanElement>(null);
+  // Strip geometry in px, measured on resize (never per frame): its width, the left edge of the action buttons and the label's width.
+  const geo = useRef({ w: 0, stop: Infinity, label: 0 });
 
   useEffect(() => {
     const measure = () => {
@@ -50,10 +52,17 @@ export default function SiteHeader() {
         at: Math.min(1, Math.max(0, (el.getBoundingClientRect().top + scrollY - innerHeight * 0.4) / max)), label: el.dataset.waypoint ?? '',
       })) });
     };
+    const strip = () => {
+      const b = bar.current?.getBoundingClientRect(), a = actions.current?.getBoundingClientRect();
+      if (b && a) geo.current = { w: b.width, stop: a.left - b.left - 8, label: label.current?.offsetWidth ?? 0 };
+    };
     measure();
-    const ro = new ResizeObserver(measure);
+    strip();
+    // A scrollbar appearing changes the strip without a window resize, so the body observer re-measures the strip too.
+    const ro = new ResizeObserver(() => { measure(); strip(); });
     ro.observe(document.body);
-    return () => ro.disconnect();
+    addEventListener('resize', strip);
+    return () => { ro.disconnect(); removeEventListener('resize', strip); };
   }, [path]);
 
   useEffect(() => {
@@ -76,15 +85,17 @@ export default function SiteHeader() {
     if (Math.abs(d) > 0.5) last.current.dir = d < 0 ? -1 : 1;
     last.current.sy = sy;
     if (plane.current && fill.current) {
-      plane.current.style.left = p * 100 + '%';
+      // The plane stays whole on the strip at 0 % and 100 %.
+      plane.current.style.left = Math.min(Math.max(p * geo.current.w, 7), Math.max(7, geo.current.w - 7)) + 'px';
       plane.current.style.transform = `translateX(-7px) scaleX(${last.current.dir})`;
       fill.current.style.width = p * 100 + '%';
     }
     if (label.current) {
       const now = list.findLast(m => m.at <= p + 0.001)?.label ?? '';
-      if (label.current.textContent !== now) label.current.textContent = now;
-      label.current.style.left = p * 100 + '%';
-      label.current.style.transform = p > 0.7 ? 'translateX(calc(-100% - 14px))' : 'translateX(14px)';
+      if (label.current.textContent !== now) { label.current.textContent = now; geo.current.label = label.current.offsetWidth; }
+      // Trails the plane (leading it before 70 %, behind it after) but never reaches the action buttons ("Hablemos").
+      const { w, stop, label: lw } = geo.current, x = p * w;
+      label.current.style.transform = `translateX(${Math.max(0, Math.min(p > 0.7 ? x - 14 - lw : x + 14, stop - lw))}px)`;
     }
   });
 
@@ -95,7 +106,7 @@ export default function SiteHeader() {
     <header className="fixed inset-x-0 top-0 z-50 border-b border-borde bg-noche">
       <div className="gutter relative mx-auto flex h-16 max-w-[1408px] items-center justify-between gap-3 text-hueso">
         <Link href="/" aria-label="FlightDev, inicio" className="flex items-center gap-2 text-inherit">
-          <PlaneMark size={26} fold="#7DB8FF" />
+          <PlaneMark size={30} fold="#7DB8FF" />
           <span className="font-display text-lg font-semibold">flightdev</span>
         </Link>
 
@@ -131,7 +142,7 @@ export default function SiteHeader() {
           {LINKS.map(l => <Link key={l.href} href={l.href} aria-current={on(l.href) ? 'page' : undefined} className={linkCls(on(l.href))}>{l.label}</Link>)}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div ref={actions} className="flex items-center gap-2">
           <Link href="/contacto" data-track="click_contact" data-track-label="header" className="btn min-h-10 bg-voltaje px-4 text-noche hover:bg-voltaje-hover">
             Hablemos
           </Link>
@@ -142,14 +153,12 @@ export default function SiteHeader() {
           </button>
         </div>
 
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -bottom-[7px] h-3">
+        <div ref={bar} aria-hidden="true" className="pointer-events-none absolute inset-x-0 -bottom-[7px] h-3">
           <div className="absolute inset-x-0 top-1.5 border-t border-dashed border-cielo/35" />
           <div ref={fill} className="absolute left-0 top-1.5 h-px w-0 bg-cielo" />
           {list.map(m => <span key={m.label} className="absolute top-[3px] size-[7px] -translate-x-1/2 rotate-45 border border-cielo-claro bg-noche" style={{ left: m.at * 100 + '%' }} />)}
-          <span ref={label} className="absolute bottom-[10px] whitespace-nowrap max-lg:hidden bg-noche/90 px-1.5 py-0.5 font-mono text-[10px] tracking-[.12em] text-cielo-claro empty:hidden" />
-          <svg ref={plane} width="14" height="14" viewBox="0 0 100 100" className="absolute left-0 top-0 transition-transform duration-[350ms]">
-            <polygon points="4,50 96,8 40,64" fill="#2F8CFF" /><polygon points="40,64 96,8 54,94" fill="#7DB8FF" />
-          </svg>
+          <span ref={label} className="absolute bottom-[10px] left-0 whitespace-nowrap max-lg:hidden bg-noche/90 px-1.5 py-0.5 font-mono text-[10px] tracking-[.12em] text-cielo-claro empty:hidden" />
+          <span ref={plane} className="absolute left-0 top-0 flex transition-transform duration-[350ms]"><PlaneMark size={14} fold="#7DB8FF" /></span>
         </div>
       </div>
 

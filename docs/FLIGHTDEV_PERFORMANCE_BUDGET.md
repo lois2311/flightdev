@@ -9,7 +9,7 @@
 | CLS | ≤ 0,1 | Lienzos con altura reservada por CSS; imagen con dimensiones estáticas |
 | JS transferido | ≤ 190 KB | Partida 155 KB |
 | Peso total (primera carga) | ≤ 550 KB | Partida 342 KB |
-| GPU del hero | ≤ 33 ms/cuadro promedio | Si 90 cuadros promedian más, DPR baja a 1; si sigue, el vuelo se detiene en un cuadro fijo |
+| GPU del hero | ≤ ~36 ms/cuadro promedio (1/28 s, margen sobre 30 fps) | Si 90 cuadros promedian más, DPR baja a 1; si sigue, el vuelo se detiene en un cuadro fijo |
 
 ## Medición (laboratorio)
 
@@ -30,3 +30,20 @@ Lectura honesta:
 - **Regresión a vigilar:** 391 ms de *long tasks* en la carga en frío de escritorio. No se perfiló; la hipótesis es la subida de la malla de 256² vértices y la compilación de shaders (pueden ser también hidratación y decodificación de fuentes). No bloquea el LCP; puede afectar el INP si el usuario interactúa en el primer segundo. Mejora posible: construir la malla en un *worker* o bajar a 192².
 - INP **no medido**: requiere interacción real o datos de campo. Pendiente tras el despliegue.
 - Medidas en una máquina de desarrollo sin estrangular: no representan un móvil de gama media en 4G.
+
+## Vuelo continuo (ADR-004)
+
+Mismas condiciones de laboratorio (build de producción, Chromium sin estrangular, WebGL por software en modo *headless*, DPR 1). Una carga en caliente por ancho; el recorrido completo desplaza la página de arriba abajo en pasos de 140 px cada 16 ms.
+
+| | LCP | CLS | JS | Total | Long tasks (carga) | Long tasks (recorrido) | Cuadros del recorrido |
+|---|---|---|---|---|---|---|---|
+| 1440×900 | 208 ms (H1) | 0 | 172 KB | 465 KB | 87 ms | 0 | p95 17 ms, máx. 34 ms, 167 dibujos |
+| 390×844 | 196 ms (H1) | 0 | 168 KB | 489 KB | 54 ms | 0 | p95 17 ms, máx. 17 ms, 177 dibujos |
+
+Lectura honesta:
+
+- JS dentro del presupuesto (≤ 190 KB) y 1 KB por debajo del hero anterior en escritorio: el lienzo único reemplazó a `CordilleraFlight` y la ruta, la cámara y la capa 2D ocupan lo mismo.
+- LCP sigue siendo el H1; CLS 0. El lienzo es `fixed`, sin efecto en el flujo.
+- El recorrido no genera *long tasks*. Pero el WebGL de laboratorio corre por software y a DPR 1: **no mide el costo de GPU** de un lienzo a ventana completa en una iGPU o un móvil de gama media a DPR 1,5. Esa es la medición pendiente; la salvaguarda es la regla de ~36 ms (DPR 1, luego cuadro fijo por tramo).
+- Render bajo demanda verificado con un contador de `drawElements`: 0 dibujos en reposo, el dibujo se detiene al asentarse la cámara y no se dibuja con una sección opaca en pantalla.
+- INP sigue sin medirse (requiere interacción real).

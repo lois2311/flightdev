@@ -42,6 +42,9 @@ CRM-1…CRM-6 en `FLIGHTDEV_CRM_ARCHITECTURE.md`.
 | QA-3 | Medir Core Web Vitals en Vercel (Speed Insights) y Lighthouse móvil |
 | QA-4 | Content-Security-Policy con nonces |
 | PERF-1 | ~~Pausar los bucles `requestAnimationFrame` del avión del hero~~ resuelto: el hero ya no tiene bucle rAF (erradicación de patrones genéricos) |
+| PERF-2 | Medir el vuelo continuo (ADR-004) en GPU real: iGPU de portátil y móvil de gama media (fps al hacer scroll, INP). Las mediciones actuales son con WebGL por software |
+| QA-5 | Probar el vuelo continuo en Safari/iOS y Firefox (unidades `svh`, `animation-timeline`, WebGL2) |
+| CONT-6 | Captura de FleetTrack en ≥ 2560 px de ancho: la actual (960 px) se ve suave al mostrarse a 1278 px en el home |
 
 ## Dirección visual (sesión de transformación)
 

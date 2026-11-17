@@ -137,3 +137,52 @@ body {
   .fd-caret, .flow, .fd-swap { animation: none; }
   .terrain-line { transition: none; }
 }
+
+/* plane:start */
+/* PaperPlane: attitude comes from --bank/--pitch/--alt set by the tour; nothing here runs per frame. */
+.pp { position: relative; aspect-ratio: 1; perspective: 900px; }
+.pp-body { position: relative; transform-origin: 50% 50%; transform: rotateZ(var(--bank, 0deg)) rotateX(var(--pitch, 0deg)); will-change: transform; animation: ppFloat 7s ease-in-out infinite; }
+.pp-art { display: block; width: 100%; height: auto; overflow: visible; }
+.pp-night .pp-art { filter: drop-shadow(0 0 7px rgb(47 140 255 / .28)); }
+/* Light is NW, so the shadow slides SE as altitude grows, spreading and fading (transform + opacity only). */
+.pp-shadow {
+  position: absolute; left: 10%; top: 46%; width: 80%; height: 34%; pointer-events: none;
+  background: radial-gradient(closest-side, rgb(10 20 40 / .6), rgb(10 20 40 / 0));
+  transform: translate(calc(var(--alt, .5) * 16%), calc(var(--alt, .5) * 24%)) scale(calc(.7 + var(--alt, .5) * .55));
+  opacity: calc(.55 - var(--alt, .5) * .4);
+}
+.pp-night .pp-shadow { background: radial-gradient(closest-side, rgb(0 0 0 / .7), rgb(0 0 0 / 0)); }
+@keyframes ppFloat { 50% { translate: 0 -2.5%; } }
+@media (prefers-reduced-motion: reduce) { .pp-body { animation: none; will-change: auto; } }
+/* plane:end */
+
+/* tour:start */
+/* Home flight (art/FlightTour): <html data-tour> is "static" (heightmap loaded, no canvas) or "live" (canvas drawing).
+   Hero and interludes carry their own paper/night background until the canvas draws, then turn into windows onto it. */
+html[data-tour='live'] .tour-sheet { background-color: transparent; }
+html[data-tour='live'] .tour-fallback { opacity: 0; visibility: hidden; transition: opacity var(--dur-slow) var(--ease-standard), visibility 0s var(--dur-slow); }
+/* Instrument rows need the real heightmap; without it the whole panel stays out instead of showing blanks. */
+html:not([data-tour]) .tour-readouts { display: none; }
+/* Keeps the big lettering and the readouts legible over day or night relief. The top quarter fades to nothing so the previous section's edge does not show as a seam. */
+.tour-scrim { background: linear-gradient(to top, rgb(10 20 40 / .86), rgb(10 20 40 / .18) 55%, rgb(10 20 40 / .32) 75%, rgb(10 20 40 / 0)); }
+/* The leg the tour has reached (<... data-tour-leg="001|002|003|004|destino"> on an ancestor) lights its lettering code; the others go quiet.
+   Unlayered on purpose: it must beat the accent utility on the span. Without the attribute (no JS) every code keeps its accent. */
+.tour-code { transition: color var(--dur-base) var(--ease-standard); }
+[data-tour-leg] .tour-code { color: var(--color-muted); }
+[data-tour-leg='001' i] .tour-code[data-code='001'], [data-tour-leg='002' i] .tour-code[data-code='002'],
+[data-tour-leg='003' i] .tour-code[data-code='003'], [data-tour-leg='004' i] .tour-code[data-code='004'] { color: var(--color-cielo-claro); }
+[data-tour-leg='destino' i] .tour-code[data-code='DESTINO'] { color: var(--color-voltaje); }
+/* Each lettering line is wiped up into place as its interlude scrolls in (scroll-linked, runs once per entry; absent where unsupported). */
+@keyframes legLine {
+  from { clip-path: inset(100% -.1em 0 -.1em); transform: translateY(.16em); }
+  to { clip-path: inset(-.3em -.1em -.1em -.1em); transform: none; }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .tour-line { animation: legLine linear both; animation-timeline: view(); }
+    .tour-code { animation-range: entry 8% entry 60%; }
+    .tour-name { animation-range: entry 20% entry 78%; }
+  }
+}
+@media (prefers-reduced-motion: reduce) { .tour-code { transition: none; } }
+/* tour:end */

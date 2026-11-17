@@ -45,7 +45,7 @@ Archivo, una sola familia variable: **condensada** (`wdth` 72) en titulares, com
 
 ## Movimiento
 
-Tres cosas se mueven: la ruta discontinua, el relieve al dibujarse y el **vuelo del hero** (`components/art/CordilleraFlight.tsx`, WebGL2 sobre el relieve real; reemplazó al prototipo en Canvas 2D `Flyover.tsx`): una carta en perspectiva, con la cámara recorriendo la ruta de la empresa y la tabla de instrumentos nombrando el próximo *waypoint*. Nada sigue al cursor, nada aparece con *fade-in* al hacer scroll y nada late. Con `prefers-reduced-motion` todo se detiene y el hero muestra el relieve estático. Las demos de producto (caja de Vendra, cotizador de AG Clean Ops) sí se animan, porque muestran cómo funciona el producto.
+Tres cosas se mueven: la ruta discontinua, el relieve al dibujarse y el **vuelo continuo del home** (`components/art/FlightTour.tsx`, WebGL2 sobre el relieve real, ver `docs/adr/ADR-004-vuelo-continuo-scroll.md`): la cámara recorre con el scroll la ruta de Manizales al Nevado del Ruiz, de día en el hero y de noche en los interludios, con instrumentos calculados del relieve. Nada sigue al cursor, nada aparece con *fade-in* al hacer scroll y nada late. Con `prefers-reduced-motion` nada se amortigua: cada tramo muestra un cuadro fijo. Las demos de producto (caja de Vendra, cotizador de AG Clean Ops) sí se animan, porque muestran cómo funciona el producto.
 
 ## Imagen, video e iconografía
 
