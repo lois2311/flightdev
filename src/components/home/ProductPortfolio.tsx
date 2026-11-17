@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import VendraLogo from '../vendra/VendraLogo';
+import FleetTrackWordmark from '../fleettrack/FleetTrackWordmark';
 import { FleetVignette, VendraVignette } from '../showcase/Vignettes';
 import { FLEETTRACK, VENDRA } from '@/content/products';
 
@@ -12,7 +13,7 @@ const PANELS = [
   },
   {
     p: FLEETTRACK, accent: 'text-cielo-claro', bar: 'bg-cielo', code: 'FD-02 · TRANSPORTE',
-    mark: <span className="font-display text-[26px] font-bold tracking-[-.02em] text-hueso">FleetTrack<span className="text-cielo"> Pro</span></span>,
+    mark: <FleetTrackWordmark />,
     art: <FleetVignette />,
     points: ['Vehículos, conductores y turnos en un panel', 'Ingresos, gastos y combustible por turno', 'Mantenimiento, documentos y servicios'],
   },

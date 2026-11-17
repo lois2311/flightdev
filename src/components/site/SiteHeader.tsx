@@ -37,6 +37,24 @@ export default function SiteHeader() {
   const plane = useRef<SVGSVGElement>(null), fill = useRef<HTMLDivElement>(null), productsRef = useRef<HTMLDivElement>(null);
   const productsBtn = useRef<HTMLButtonElement>(null), mobileBtn = useRef<HTMLButtonElement>(null);
   const last = useRef({ sy: 0, dir: 1 });
+  // Waypoints of the page's flight plan ([data-waypoint] sections), as fractions of the scroll range.
+  const [marks, setMarks] = useState<{ path: string; list: { at: number; label: string }[] }>({ path, list: [] });
+  const list = marks.path === path ? marks.list : [];
+  const label = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const measure = () => {
+      const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+      // A waypoint is reached when its section's top passes 40% of the viewport, the same rule the label uses.
+      setMarks({ path, list: [...document.querySelectorAll<HTMLElement>('[data-waypoint]')].map(el => ({
+        at: Math.min(1, Math.max(0, (el.getBoundingClientRect().top + scrollY - innerHeight * 0.4) / max)), label: el.dataset.waypoint ?? '',
+      })) });
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(document.body);
+    return () => ro.disconnect();
+  }, [path]);
 
   useEffect(() => {
     if (open === 'closed') return;
@@ -61,6 +79,12 @@ export default function SiteHeader() {
       plane.current.style.left = p * 100 + '%';
       plane.current.style.transform = `translateX(-7px) scaleX(${last.current.dir})`;
       fill.current.style.width = p * 100 + '%';
+    }
+    if (label.current) {
+      const now = list.findLast(m => m.at <= p + 0.001)?.label ?? '';
+      if (label.current.textContent !== now) label.current.textContent = now;
+      label.current.style.left = p * 100 + '%';
+      label.current.style.transform = p > 0.7 ? 'translateX(calc(-100% - 14px))' : 'translateX(14px)';
     }
   });
 
@@ -121,6 +145,8 @@ export default function SiteHeader() {
         <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -bottom-[7px] h-3">
           <div className="absolute inset-x-0 top-1.5 border-t border-dashed border-cielo/35" />
           <div ref={fill} className="absolute left-0 top-1.5 h-px w-0 bg-cielo" />
+          {list.map(m => <span key={m.label} className="absolute top-[3px] size-[7px] -translate-x-1/2 rotate-45 border border-cielo-claro bg-noche" style={{ left: m.at * 100 + '%' }} />)}
+          <span ref={label} className="absolute bottom-[10px] whitespace-nowrap max-lg:hidden bg-noche/90 px-1.5 py-0.5 font-mono text-[10px] tracking-[.12em] text-cielo-claro empty:hidden" />
           <svg ref={plane} width="14" height="14" viewBox="0 0 100 100" className="absolute left-0 top-0 transition-transform duration-[350ms]">
             <polygon points="4,50 96,8 40,64" fill="#2F8CFF" /><polygon points="40,64 96,8 54,94" fill="#7DB8FF" />
           </svg>

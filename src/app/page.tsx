@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import HeroSection from '@/components/HeroSection';
-import ProductPortfolio from '@/components/home/ProductPortfolio';
-import ProblemsSection from '@/components/home/ProblemsSection';
-import CaseTeaser from '@/components/home/CaseTeaser';
+import ProductScenes from '@/components/home/ProductScenes';
+import EngineeringMatrix from '@/components/home/EngineeringMatrix';
+import CaseChart from '@/components/home/CaseChart';
+import MethodChecklist from '@/components/home/MethodChecklist';
 import Manifesto from '@/components/home/Manifesto';
+import Destination from '@/components/home/Destination';
 import PostList from '@/components/blog/PostList';
-import CtaBand from '@/components/site/CtaBand';
 import { POSTS } from '@/content/posts';
 import { pageMetadata } from '@/lib/seo';
 
@@ -16,14 +17,15 @@ export const metadata = pageMetadata({
   absoluteTitle: true,
 });
 
-// Order follows the visitor's questions: what do you make, does it solve my problem, has it worked, why trust you, what to read, how to start.
+// A flight plan: origin (who we are), 001 what we make, 002 what we can build, 003 proof, 004 how we work, destination (talk to us).
 export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <ProductPortfolio />
-      <ProblemsSection />
-      <CaseTeaser />
+      <ProductScenes />
+      <EngineeringMatrix />
+      <CaseChart />
+      <MethodChecklist />
       <Manifesto />
       <section aria-labelledby="recursos" className="gutter border-t border-borde bg-noche py-24">
         <div className="mx-auto flex max-w-[1280px] flex-col gap-10">
@@ -34,7 +36,7 @@ export default function HomePage() {
           <PostList posts={POSTS.slice(0, 3)} />
         </div>
       </section>
-      <CtaBand title="¿Qué parte de tu operación quieres mejorar primero?" text="Cuéntanos tu caso. Te respondemos con una recomendación concreta: un producto, un desarrollo o ninguno de los dos." />
+      <Destination />
     </>
   );
 }

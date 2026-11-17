@@ -103,13 +103,37 @@ body {
 /* Dotted flight paths drift at 14 px/s; 1386 is a whole number of both dash periods (2+9, 2+7), so the loop is seamless. */
 @keyframes flow { to { stroke-dashoffset: -1386 } }
 .flow { animation: flow 99s linear infinite; }
+/* Instrument reading swapping to a new value (hero flyover's next waypoint). */
+@keyframes fdSwap { from { opacity: 0; transform: translateY(4px) } }
+.fd-swap { animation: fdSwap var(--dur-base) var(--ease-out-expo); }
 
 /* Terrain ridgelines draw in once; hidden only after JS marks them pending, so no-JS still shows them. */
 .terrain-line { transition: stroke-dashoffset var(--dur-scene) var(--ease-out-expo); transition-delay: calc(var(--i, 0) * 45ms); }
 [data-draw='pending'] .terrain-line { stroke-dashoffset: 1; }
 
+/* Flight plan (home): each leg of the page is a waypoint; a dashed route runs down the left gutter, in the margin like a chart's neatline. */
+/* In the components layer so Tailwind utilities on a given leg (border colour, height) still win. */
+@layer components {
+  .leg { --pad: clamp(20px, 5vw, 64px); }
+  .leg-stem {
+    position: absolute; top: 0; bottom: 0; width: 0; pointer-events: none;
+    left: calc(var(--pad) / 2 + max(0px, (100% - 2 * var(--pad) - 1280px) / 2));
+    border-left: 1px dashed rgb(47 140 255 / .38);
+  }
+  .leg-diamond { position: absolute; left: calc(var(--pad) / -2); top: 50%; width: 9px; height: 9px; transform: translate(-50%, -50%) rotate(45deg); border: 1px solid var(--color-cielo-claro); background: var(--color-noche); }
+}
+/* The route ahead is drawn as the reader advances: scroll-linked, compositor-cheap, and absent where unsupported (the line is then simply drawn). */
+@keyframes legStem { from { clip-path: inset(0 0 100% 0) } to { clip-path: inset(0) } }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .leg-stem { animation: legStem linear both; animation-timeline: view(); animation-range: entry 15% cover 55%; }
+  }
+}
+/* Chart leader dots between a checklist challenge and its response. */
+.leader { flex: 1; min-width: 24px; border-bottom: 2px dotted currentColor; opacity: .35; transform: translateY(-.3em); }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .fd-caret, .flow { animation: none; }
+  .fd-caret, .flow, .fd-swap { animation: none; }
   .terrain-line { transition: none; }
 }
