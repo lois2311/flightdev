@@ -34,9 +34,8 @@ export default function SiteFooter() {
             ))}
           </nav>
         </div>
-        <div aria-hidden="true" className="relative -mx-[clamp(20px,5vw,64px)] select-none overflow-hidden pt-6">
-          <Terrain seed={77} lines={12} height={200} fill="#081122" className="absolute inset-x-0 bottom-0 h-[70%] [mask-image:linear-gradient(90deg,transparent,#000_12%,#000_88%,transparent)]" />
-          <p className="relative m-0 whitespace-nowrap px-[clamp(20px,5vw,64px)] font-display text-[clamp(4.5rem,17vw,15rem)] font-bold leading-[.8] tracking-[-.05em] text-transparent [-webkit-text-stroke:1px_rgba(125,184,255,.35)]">flightdev</p>
+        <div aria-hidden="true" className="relative -mx-[clamp(20px,5vw,64px)] h-[clamp(90px,12vw,160px)] overflow-hidden">
+          <Terrain seed={77} lines={12} height={200} fill="#081122" className="absolute inset-0" />
         </div>
         <div className="flex flex-wrap items-center justify-between gap-4 border-t border-borde pt-6 text-[13px]">
           <span>© {new Date().getFullYear()} FlightDev · Manizales, Colombia · <span className="font-mono text-[11px] tracking-[.1em]">05°04′N 75°31′W</span></span>

@@ -2,7 +2,6 @@
 
 import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import Link from 'next/link';
-import CtaInner from '../ui/CtaInner';
 import { CONTACT_EMAIL } from '@/config';
 import { track } from '@/lib/analytics';
 import { readAttribution } from '@/lib/attribution';
@@ -157,7 +156,7 @@ export default function LeadForm({ product, formName = 'contacto', title }: { pr
           {PRODUCTS.map((p, i) => {
             const on = values.product === p.value;
             return (
-              <label key={p.value} className={`flex min-h-11 cursor-pointer items-center rounded-full border px-4 text-sm font-medium transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-cielo ${on ? 'border-cielo bg-cielo/15 text-hueso' : 'border-borde text-niebla hover:border-cielo/50'}`}>
+              <label key={p.value} className={`flex min-h-11 cursor-pointer items-center rounded-[3px] border px-4 text-sm font-medium transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-cielo ${on ? 'border-cielo bg-cielo/15 text-hueso' : 'border-borde text-niebla hover:border-cielo/50'}`}>
                 <input type="radio" name={id('product')} value={p.value} checked={on} data-field={i === 0 ? 'product' : undefined}
                   onChange={() => pickProduct(p.value)} onBlur={() => blur('product')} className="sr-only" />
                 {p.label}
@@ -216,7 +215,7 @@ export default function LeadForm({ product, formName = 'contacto', title }: { pr
       </div>
 
       {status.kind === 'failed' && (
-        <div role="alert" className="flex flex-col gap-2 rounded-xl border border-error/40 bg-error/10 px-4 py-3 text-sm text-hueso">
+        <div role="alert" className="flex flex-col gap-2 rounded-[3px] border border-error/40 bg-error/10 px-4 py-3 text-sm text-hueso">
           <span>{status.message}</span>
           {status.mailto && <a href={mailto} className="w-fit font-semibold text-cielo-claro underline underline-offset-2">Escribir a {CONTACT_EMAIL}</a>}
         </div>
@@ -224,9 +223,9 @@ export default function LeadForm({ product, formName = 'contacto', title }: { pr
 
       <div className="flex flex-wrap items-center justify-between gap-4">
         <span className="text-xs text-muted">Respondemos en horario hábil de Colombia.</span>
-        <button type="submit" disabled={status.kind === 'submitting'} data-magnet
-          className="pill cursor-pointer gap-3.5 border-none bg-[linear-gradient(180deg,#C8EC83,#B4E854)] py-1.5 pl-6 pr-1.5 text-base text-noche shadow-[inset_0_1px_0_rgba(255,255,255,.55),0_14px_34px_-12px_rgba(180,232,84,.6)] active:brightness-95 disabled:cursor-wait disabled:opacity-70">
-          <CtaInner label={status.kind === 'submitting' ? 'Enviando…' : 'Enviar solicitud'} shine="rgba(255,255,255,.6)" arrowClass="size-10 bg-noche text-voltaje" />
+        <button type="submit" disabled={status.kind === 'submitting'}
+          className="btn cursor-pointer border-none bg-voltaje text-noche hover:bg-voltaje-hover disabled:cursor-wait disabled:opacity-70">
+          {status.kind === 'submitting' ? 'Enviando…' : 'Enviar solicitud'}
         </button>
       </div>
     </form>

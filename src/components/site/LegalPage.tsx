@@ -12,7 +12,7 @@ export default function LegalPage({ title, path, version, pending, children }: {
           <span className="font-mono text-xs text-muted">Versión {version}</span>
         </header>
         {pending && pending.length > 0 && (
-          <div role="note" className="rounded-xl border border-warn/40 bg-warn/10 px-5 py-4 text-sm leading-relaxed text-hueso">
+          <div role="note" className="rounded-[3px] border border-warn/40 bg-warn/10 px-5 py-4 text-sm leading-relaxed text-hueso">
             <b>Pendiente de completar por FlightDev antes de la publicación definitiva:</b> {pending.join(', ')}.
           </div>
         )}

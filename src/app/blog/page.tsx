@@ -15,7 +15,7 @@ export default function BlogPage() {
     <>
       <PageHero
         crumbs={[{ name: 'Blog', path: '/blog' }]}
-        title={<>Guías para operar <span className="text-cielo">mejor.</span></>}
+        title={<>Guías para operar mejor.</>}
         lead="Artículos prácticos sobre puntos de venta, gestión de flotas, automatización y software empresarial. Escritos para quien toma la decisión, no para buscadores."
       />
       <section aria-label="Artículos" className="gutter bg-noche pb-28">

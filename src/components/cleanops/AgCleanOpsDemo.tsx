@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import {
-  Sparkles,
   ShieldCheck,
   Calendar,
   CreditCard,
@@ -152,7 +151,7 @@ export default function AgCleanOpsDemo() {
 
         {/* Environment Badge */}
         <div className="flex items-center gap-2 font-mono text-[11px] text-muted">
-          <span className="fd-pulse size-2 rounded-full bg-voltaje" />
+          <span className="size-2 rounded-full bg-voltaje" />
           <span className="hidden sm:inline">PRODUCCIÓN · EE. UU.</span>
         </div>
       </div>
@@ -165,7 +164,7 @@ export default function AgCleanOpsDemo() {
           <div className="flex items-center justify-between border-b border-borde pb-4">
             <div className="flex items-center gap-2.5">
               <span className="grid size-9 place-items-center rounded-xl bg-cielo/15 text-cielo-claro border border-cielo/30">
-                <Sparkles size={18} />
+                <span className="font-display text-sm font-bold">AG</span>
               </span>
               <div>
                 <span className="block font-display text-base font-bold text-hueso">AG Cleaning Service</span>
@@ -201,7 +200,7 @@ export default function AgCleanOpsDemo() {
           {/* Step 1: Select Service Type */}
           <div className="flex flex-col gap-2.5">
             <div className="flex items-center justify-between text-xs font-mono">
-              <span className="tracking-[.08em] text-cielo-claro">01 // TIPO DE SERVICIO</span>
+              <span className="tracking-[.08em] text-cielo-claro">01 · TIPO DE SERVICIO</span>
               <span className="text-muted">Tiempo estimado: {activeService.time}</span>
             </div>
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
@@ -240,7 +239,7 @@ export default function AgCleanOpsDemo() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {/* Bedrooms selector */}
             <div className="flex flex-col gap-2">
-              <span className="text-xs font-mono tracking-[.08em] text-cielo-claro">02 // HABITACIONES</span>
+              <span className="text-xs font-mono tracking-[.08em] text-cielo-claro">02 · HABITACIONES</span>
               <div className="flex items-center gap-1.5 rounded-xl border border-borde bg-superficie p-1.5">
                 {[1, 2, 3, 4, 5].map((n) => {
                   const active = bedrooms === n;
@@ -267,7 +266,7 @@ export default function AgCleanOpsDemo() {
 
             {/* Frequency selector */}
             <div className="flex flex-col gap-2">
-              <span className="text-xs font-mono tracking-[.08em] text-cielo-claro">03 // FRECUENCIA</span>
+              <span className="text-xs font-mono tracking-[.08em] text-cielo-claro">03 · FRECUENCIA</span>
               <div className="flex items-center gap-1 rounded-xl border border-borde bg-superficie p-1">
                 {FREQUENCIES.map((f) => {
                   const active = freq === f.id;
@@ -295,7 +294,7 @@ export default function AgCleanOpsDemo() {
 
           {/* Step 3: Slots */}
           <div className="flex flex-col gap-2">
-            <span className="text-xs font-mono tracking-[.08em] text-cielo-claro">04 // HORARIO DISPONIBLE</span>
+            <span className="text-xs font-mono tracking-[.08em] text-cielo-claro">04 · HORARIO DISPONIBLE</span>
             <div className="grid grid-cols-3 gap-2">
               {SLOTS.map((sl) => {
                 const active = selectedSlot === sl;
@@ -375,7 +374,7 @@ export default function AgCleanOpsDemo() {
               <button
                 type="button"
                 onClick={() => setIsBooked(true)}
-                className="group relative flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[linear-gradient(180deg,#4FA0FF,#2F8CFF)] font-display text-sm font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,.35),0_12px_24px_-8px_rgba(47,140,255,.6)] transition-all hover:brightness-110 active:scale-[0.98]"
+                className="group relative flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-cielo font-display text-sm font-semibold text-white transition-colors hover:bg-cielo-claro hover:text-noche"
               >
                 <span>Confirmar & Agendar</span>
                 <CreditCard size={16} className="transition-transform group-hover:translate-x-0.5" />

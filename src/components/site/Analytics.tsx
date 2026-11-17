@@ -57,14 +57,14 @@ export default function Analytics() {
 
   return (
     <div role="dialog" aria-live="polite" aria-label="Preferencias de cookies"
-      className="fixed inset-x-3 bottom-3 z-[60] mx-auto flex max-w-[720px] flex-wrap items-center gap-4 rounded-2xl border border-borde bg-superficie/95 p-4 text-sm text-niebla shadow-[0_20px_50px_-20px_rgba(0,0,0,.7)] backdrop-blur sm:p-5">
+      className="fixed inset-x-3 bottom-3 z-[60] mx-auto flex max-w-[720px] flex-wrap items-center gap-4 rounded-[3px] border border-borde bg-superficie/95 p-4 text-sm text-niebla shadow-[0_20px_50px_-20px_rgba(0,0,0,.7)] backdrop-blur sm:p-5">
       <p className="m-0 min-w-[240px] flex-1 leading-relaxed">
         Usamos cookies de analítica para entender qué páginas son útiles. No las activamos sin tu permiso.{' '}
         <Link href="/politica-de-cookies" className="text-cielo-claro underline underline-offset-2">Política de cookies</Link>
       </p>
       <div className="flex gap-2">
-        <button type="button" onClick={() => choose('denied')} className="min-h-11 cursor-pointer rounded-full border border-white/15 px-4 font-semibold text-hueso hover:border-white/30">Rechazar</button>
-        <button type="button" onClick={() => choose('granted')} className="min-h-11 cursor-pointer rounded-full bg-cielo px-4 font-semibold text-noche hover:brightness-110">Aceptar</button>
+        <button type="button" onClick={() => choose('denied')} className="min-h-11 cursor-pointer rounded-[3px] border border-borde px-4 font-semibold text-hueso hover:border-white/30">Rechazar</button>
+        <button type="button" onClick={() => choose('granted')} className="min-h-11 cursor-pointer rounded-[3px] bg-cielo px-4 font-semibold text-noche hover:brightness-110">Aceptar</button>
       </div>
     </div>
   );

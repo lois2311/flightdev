@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import PageHero from '@/components/site/PageHero';
-import CapabilitiesSection from '@/components/home/CapabilitiesSection';
 import CtaBand from '@/components/site/CtaBand';
 import { pageMetadata } from '@/lib/seo';
 
@@ -22,7 +21,7 @@ export default function SolutionsPage() {
     <>
       <PageHero
         crumbs={[{ name: 'Soluciones', path: '/soluciones' }]}
-        title={<>Soluciones según el problema <span className="text-cielo">que necesitas resolver.</span></>}
+        title={<>Soluciones según el problema que necesitas resolver.</>}
         lead="Algunas necesidades se resuelven mejor con un producto listo; otras, con software construido para tu operación. Te ayudamos a elegir el camino correcto."
       />
       <section aria-labelledby="por-necesidad" className="gutter border-t border-borde bg-noche py-24">
@@ -39,7 +38,6 @@ export default function SolutionsPage() {
           </ul>
         </div>
       </section>
-      <CapabilitiesSection />
       <CtaBand title="¿No sabes por dónde empezar?" text="Cuéntanos el problema. Te respondemos con la opción que tiene más sentido para tu operación." />
     </>
   );

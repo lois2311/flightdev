@@ -60,10 +60,11 @@ body {
 :focus-visible { outline: 2px solid var(--color-cielo); outline-offset: 2px; }
 
 @layer components {
-  /* Magnetic pill CTA; its transform is written by usePointerFx */
-  .pill {
-    position: relative; overflow: hidden; display: inline-flex; flex-shrink: 0; align-items: center; white-space: nowrap;
-    border-radius: 999px; font-family: var(--font-display); font-weight: 600; transition: transform .25s ease-out;
+  /* Instrument-panel button: squared, solid, no glow. Lime stays reserved for the primary commercial action. */
+  .btn {
+    display: inline-flex; flex-shrink: 0; align-items: center; justify-content: center; gap: .6em; min-height: 44px; white-space: nowrap;
+    border-radius: 3px; padding: 0 20px; font-family: var(--font-display); font-weight: 600; font-size: 15px;
+    transition: background-color var(--dur-fast), border-color var(--dur-fast), color var(--dur-fast);
   }
   .eyebrow { margin: 0; font-family: var(--font-mono); font-size: 12px; letter-spacing: .12em; }
   .h2 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 4.4vw, 3.8rem); line-height: 1; letter-spacing: -.02em; }
@@ -94,30 +95,18 @@ body {
   }
 }
 
-@keyframes fdPulse { 0%, 100% { opacity: 1; transform: scale(1) } 50% { opacity: .35; transform: scale(.7) } }
 @keyframes fdCaret { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
-.fd-pulse { animation: fdPulse 2s ease-in-out infinite; }
 .fd-caret { animation: fdCaret 1s steps(1) infinite; }
 /* Dotted flight paths drift at 14 px/s; 1386 is a whole number of both dash periods (2+9, 2+7), so the loop is seamless. */
 @keyframes flow { to { stroke-dashoffset: -1386 } }
 .flow { animation: flow 99s linear infinite; }
 
-/* Masked line reveal (adapted from 21st.dev soralabs/text-reveal-mask, CSS-only): JS marks pending, IO clears it. */
-[data-mask] > span { display: block; overflow: hidden; padding-bottom: .08em; }
-[data-mask] > span > span { display: block; transition: transform var(--dur-slow) var(--ease-out-expo); transition-delay: calc(var(--i, 0) * 90ms); }
-[data-mask='pending'] > span > span { transform: translateY(108%); }
-
 /* Terrain ridgelines draw in once; hidden only after JS marks them pending, so no-JS still shows them. */
 .terrain-line { transition: stroke-dashoffset var(--dur-scene) var(--ease-out-expo); transition-delay: calc(var(--i, 0) * 45ms); }
 [data-draw='pending'] .terrain-line { stroke-dashoffset: 1; }
 
-/* Departure board ticker: duplicated track, translate -50%; paused on hover or by the PAUSAR control. */
-@keyframes marquee { to { transform: translateX(-50%) } }
-.marquee-track { animation: marquee 60s linear infinite; }
-.marquee:hover .marquee-track, .marquee:has(input:checked) .marquee-track { animation-play-state: paused; }
-
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .fd-pulse, .fd-caret, .flow, .marquee-track { animation: none; }
-  [data-mask] > span > span, .terrain-line { transition: none; }
+  .fd-caret, .flow { animation: none; }
+  .terrain-line { transition: none; }
 }

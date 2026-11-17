@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es-CO" className={`${outfit.variable} ${figtree.variable} ${mono.variable}`}>
       <body>
-        <a href="#contenido" className="sr-only z-[70] rounded-full bg-voltaje px-4 py-2 font-semibold text-noche focus:not-sr-only focus:fixed focus:left-4 focus:top-4">Saltar al contenido</a>
+        <a href="#contenido" className="sr-only z-[70] rounded-[3px] bg-voltaje px-4 py-2 font-semibold text-noche focus:not-sr-only focus:fixed focus:left-4 focus:top-4">Saltar al contenido</a>
         <JsonLd data={[organizationLd(), websiteLd()]} />
         <SiteHeader />
         <main id="contenido">{children}</main>

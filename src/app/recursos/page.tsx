@@ -20,7 +20,7 @@ export default function ResourcesPage() {
     <>
       <PageHero
         crumbs={[{ name: 'Recursos', path: '/recursos' }]}
-        title={<>Recursos para <span className="text-cielo">tomar decisiones.</span></>}
+        title={<>Recursos para tomar decisiones.</>}
         lead="Guías organizadas por tema y accesos a la información de cada producto. Lo que publicamos responde preguntas reales de nuestros clientes."
       />
       <section aria-label="Recursos por tema" className="gutter bg-noche pb-24">
@@ -36,7 +36,7 @@ export default function ResourcesPage() {
               ['/productos/vendra', 'Vendra POS', 'Funciones, preguntas frecuentes y demostración.'],
               ['/productos/fleettrack', 'FleetTrack Pro', 'Módulos, preguntas frecuentes y demostración.'],
             ].map(([href, t, d]) => (
-              <Link key={href} href={href} className="flex flex-col gap-2 rounded-2xl border border-borde bg-superficie p-6 hover:border-cielo/45">
+              <Link key={href} href={href} className="flex flex-col gap-2 rounded-[3px] border border-borde bg-superficie p-6 hover:border-cielo/45">
                 <span className="font-mono text-[11px] tracking-[.12em] text-muted">PRODUCTO</span>
                 <span className="font-display text-xl font-semibold text-hueso">{t}</span>
                 <span className="text-niebla">{d}</span>

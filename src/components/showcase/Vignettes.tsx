@@ -40,7 +40,7 @@ export function FleetVignette({ className = '' }: { className?: string }) {
         <span className="mx-auto h-1.5 w-16 rounded-full bg-white/10" />
         <div className="flex items-center justify-between font-mono text-[10px] tracking-[.12em]">
           <span className="text-muted">VEHÍCULO 07</span>
-          <span className="flex items-center gap-1.5 text-cielo-claro"><span className="fd-pulse size-1.5 rounded-full bg-cielo" />TURNO ABIERTO</span>
+          <span className="flex items-center gap-1.5 text-cielo-claro"><span className="size-1.5 rounded-full bg-cielo" />TURNO ABIERTO</span>
         </div>
         <p className="m-0 font-display text-[22px] font-semibold leading-tight text-hueso">Turno de hoy</p>
         <dl className="m-0 flex flex-col gap-px overflow-hidden rounded-xl border border-borde bg-borde text-[12px]">

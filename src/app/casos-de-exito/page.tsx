@@ -15,7 +15,7 @@ export default function CasesPage() {
     <>
       <PageHero
         crumbs={[{ name: 'Casos de éxito', path: '/casos-de-exito' }]}
-        title={<>Proyectos reales, <span className="text-cielo">en producción.</span></>}
+        title={<>Proyectos reales, en producción.</>}
         lead="Aquí publicamos solo proyectos que puedes verificar. Cada caso incluye qué construimos y, cuando el cliente lo permite, el enlace al sistema en funcionamiento."
       />
       <AgCleanOpsSection />

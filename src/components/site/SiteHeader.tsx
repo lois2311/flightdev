@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import PlaneMark from '../PlaneMark';
-import CtaInner from '../ui/CtaInner';
 import { useFrame } from '@/lib/fx';
 
 const PRODUCTS = [
@@ -26,7 +25,7 @@ const LINKS = [
 
 type Menu = 'closed' | 'products' | 'mobile';
 
-/** Floating capsule nav. A paper plane on the dashed line under it tracks reading progress. */
+/** Flat full-width nav. A paper plane on the dashed line under it tracks reading progress. */
 export default function SiteHeader() {
   const path = usePathname();
   const [menu, setMenu] = useState<{ path: string; open: Menu }>({ path, open: 'closed' });
@@ -66,12 +65,12 @@ export default function SiteHeader() {
   });
 
   const on = (href: string) => path === href || path.startsWith(href + '/');
-  const linkCls = (active: boolean) => `rounded-full px-3.5 py-2 transition-colors duration-200 ${active ? 'bg-white/10 text-hueso' : 'text-[#B6C4D8] hover:text-hueso'}`;
+  const linkCls = (active: boolean) => `px-3 py-2 transition-colors duration-200 ${active ? 'text-hueso underline decoration-cielo decoration-2 underline-offset-[10px]' : 'text-niebla hover:text-hueso'}`;
 
   return (
-    <header className="fixed inset-x-[clamp(12px,3vw,40px)] top-3 z-50 mx-auto max-w-[1280px]">
-      <div className="relative flex items-center justify-between gap-3 rounded-full border border-cielo/20 bg-[rgba(12,28,52,.82)] py-[7px] pl-5 pr-[7px] text-hueso shadow-[0_14px_40px_-18px_rgba(5,12,26,.55)] backdrop-blur-[28px] backdrop-saturate-[1.6]">
-        <Link href="/" aria-label="FlightDev — inicio" className="flex items-center gap-2 text-inherit">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-borde bg-noche">
+      <div className="gutter relative mx-auto flex h-16 max-w-[1408px] items-center justify-between gap-3 text-hueso">
+        <Link href="/" aria-label="FlightDev, inicio" className="flex items-center gap-2 text-inherit">
           <PlaneMark size={26} fold="#7DB8FF" />
           <span className="font-display text-lg font-semibold">flightdev</span>
         </Link>
@@ -83,11 +82,11 @@ export default function SiteHeader() {
               Productos <ChevronDown size={14} aria-hidden="true" className={`transition-transform ${open === 'products' ? 'rotate-180' : ''}`} />
             </button>
             {open === 'products' && (
-              <div id="nav-products" className="absolute left-0 top-[calc(100%+14px)] w-[540px] overflow-hidden rounded-[22px] border border-borde bg-superficie shadow-[0_30px_60px_-24px_rgba(0,0,0,.7)]">
-                <ul className="m-0 grid list-none grid-cols-2 gap-2 p-2">
+              <div id="nav-products" className="absolute left-0 top-[calc(100%+14px)] w-[540px] overflow-hidden rounded-[3px] border border-borde bg-superficie">
+                <ul className="m-0 grid list-none grid-cols-2 gap-px bg-borde p-0">
                   {PRODUCTS.slice(0, 2).map(p => (
                     <li key={p.href}>
-                      <Link href={p.href} onClick={close} aria-current={on(p.href) ? 'page' : undefined} className="relative flex h-full flex-col gap-2 overflow-hidden rounded-2xl border border-borde bg-noche/60 p-4 pt-5 transition-colors hover:border-cielo/40 hover:bg-noche">
+                      <Link href={p.href} onClick={close} aria-current={on(p.href) ? 'page' : undefined} className="relative flex h-full flex-col gap-2 bg-superficie p-4 pt-5 transition-colors hover:bg-vuelo">
                         <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-[3px] ${p.bar}`} />
                         <span className="font-mono text-[10px] tracking-[.14em] text-muted">{p.code}</span>
                         <span className="font-display text-lg font-semibold text-hueso">{p.name}</span>
@@ -100,7 +99,7 @@ export default function SiteHeader() {
                   <span className="flex gap-4">
                     {SERVICES.map(sv => <Link key={sv.href} href={sv.href} onClick={close} className="text-niebla hover:text-hueso">{sv.name}</Link>)}
                   </span>
-                  <Link href="/productos" onClick={close} className="whitespace-nowrap font-semibold text-cielo-claro hover:underline">Portafolio →</Link>
+                  <Link href="/productos" onClick={close} className="whitespace-nowrap font-semibold text-cielo-claro hover:underline">Portafolio</Link>
                 </div>
               </div>
             )}
@@ -109,17 +108,17 @@ export default function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link href="/contacto" data-magnet data-track="click_contact" data-track-label="header" className="pill gap-2.5 bg-[linear-gradient(180deg,#C8EC83,#B4E854)] py-[5px] pl-[18px] pr-[5px] text-[15px] text-noche shadow-[inset_0_1px_0_rgba(255,255,255,.55)] max-[420px]:pl-3.5">
-            <CtaInner label="Hablemos" shine="rgba(255,255,255,.6)" icon={15} arrowClass="size-[30px] bg-noche text-voltaje" />
+          <Link href="/contacto" data-track="click_contact" data-track-label="header" className="btn min-h-10 bg-voltaje px-4 text-noche hover:bg-voltaje-hover">
+            Hablemos
           </Link>
           <button ref={mobileBtn} type="button" aria-expanded={open === 'mobile'} aria-controls="nav-mobile" aria-label={open === 'mobile' ? 'Cerrar menú' : 'Abrir menú'}
             onClick={() => toggle('mobile')}
-            className="grid size-10 cursor-pointer place-items-center rounded-full border border-white/15 text-hueso min-[1080px]:hidden">
+            className="grid size-10 cursor-pointer place-items-center rounded-[3px] border border-borde text-hueso min-[1080px]:hidden">
             {open === 'mobile' ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
 
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-7 -bottom-[11px] h-3">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -bottom-[7px] h-3">
           <div className="absolute inset-x-0 top-1.5 border-t border-dashed border-cielo/35" />
           <div ref={fill} className="absolute left-0 top-1.5 h-px w-0 bg-cielo" />
           <svg ref={plane} width="14" height="14" viewBox="0 0 100 100" className="absolute left-0 top-0 transition-transform duration-[350ms]">
@@ -129,16 +128,16 @@ export default function SiteHeader() {
       </div>
 
       {open === 'mobile' && (
-        <nav id="nav-mobile" aria-label="Principal móvil" className="mt-4 max-h-[calc(100svh-96px)] overflow-y-auto rounded-3xl border border-borde bg-superficie p-3 shadow-[0_30px_60px_-24px_rgba(0,0,0,.7)] min-[1080px]:hidden">
+        <nav id="nav-mobile" aria-label="Principal móvil" className="max-h-[calc(100svh-64px)] overflow-y-auto border-t border-borde bg-noche p-3 min-[1080px]:hidden">
           <p className="m-0 px-4 pb-1 pt-2 font-mono text-[11px] tracking-[.12em] text-muted">PRODUCTOS</p>
           {PRODUCTS.map(p => (
-            <Link key={p.href} href={p.href} onClick={close} className="flex flex-col rounded-2xl px-4 py-3 hover:bg-white/5">
+            <Link key={p.href} href={p.href} onClick={close} className="flex flex-col px-4 py-3 hover:bg-superficie">
               <span className="font-semibold">{p.name}</span><span className="text-[13px] text-muted">{p.text}</span>
             </Link>
           ))}
           <div className="my-2 border-t border-borde" />
-          {LINKS.map(l => <Link key={l.href} href={l.href} onClick={close} className="block rounded-2xl px-4 py-3 font-semibold hover:bg-white/5">{l.label}</Link>)}
-          <Link href="/contacto" onClick={close} className="mt-2 block rounded-2xl bg-voltaje px-4 py-3.5 text-center font-semibold text-noche">Habla con nuestro equipo</Link>
+          {LINKS.map(l => <Link key={l.href} href={l.href} onClick={close} className="block px-4 py-3 font-semibold hover:bg-superficie">{l.label}</Link>)}
+          <Link href="/contacto" onClick={close} className="mt-2 block rounded-[3px] bg-voltaje px-4 py-3.5 text-center font-semibold text-noche">Habla con nuestro equipo</Link>
         </nav>
       )}
     </header>

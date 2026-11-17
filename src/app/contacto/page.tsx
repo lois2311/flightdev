@@ -20,7 +20,7 @@ export default function ContactPage() {
     <>
       <PageHero
         crumbs={[{ name: 'Contacto', path: '/contacto' }]}
-        title={<>Habla con <span className="text-cielo">nuestro equipo.</span></>}
+        title={<>Habla con nuestro equipo.</>}
         lead="Cuéntanos qué necesitas. Si te interesa un producto, coordinamos una demostración; si es un proyecto, empezamos por entender el problema."
       />
       <section aria-label="Formulario de contacto" className="gutter -mt-6 bg-noche pb-24">
@@ -32,7 +32,7 @@ export default function ContactPage() {
               <ol className="m-0 flex list-none flex-col gap-5 p-0">
                 {NEXT.map(([t, d], i) => (
                   <li key={t} className="flex gap-4">
-                    <span className="tnum grid size-8 shrink-0 place-items-center rounded-full border border-cielo/40 font-mono text-xs text-cielo-claro">{i + 1}</span>
+                    <span className="tnum grid size-8 shrink-0 place-items-center rounded-[3px] border border-cielo/40 font-mono text-xs text-cielo-claro">{i + 1}</span>
                     <div className="flex flex-col gap-1"><span className="font-semibold text-hueso">{t}</span><span className="leading-[1.55] text-niebla">{d}</span></div>
                   </li>
                 ))}

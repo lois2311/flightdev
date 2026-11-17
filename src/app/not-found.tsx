@@ -14,7 +14,7 @@ export default function NotFound() {
         <p className="m-0 text-lg leading-[1.6] text-niebla">Puede que el enlace esté desactualizado. Estas páginas sí te pueden ayudar:</p>
         <ul className="m-0 flex list-none flex-wrap gap-3 p-0">
           {[['/', 'Inicio'], ['/productos', 'Productos'], ['/blog', 'Blog'], ['/contacto', 'Contacto']].map(([h, l]) => (
-            <li key={h}><Link href={h} className="inline-flex min-h-11 items-center rounded-full border border-white/15 px-5 font-semibold text-hueso hover:border-cielo-claro/50">{l}</Link></li>
+            <li key={h}><Link href={h} className="inline-flex min-h-11 items-center rounded-[3px] border border-borde px-5 font-semibold text-hueso hover:border-cielo-claro/50">{l}</Link></li>
           ))}
         </ul>
       </div>

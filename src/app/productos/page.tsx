@@ -15,7 +15,7 @@ export default function ProductsPage() {
     <>
       <PageHero
         crumbs={[{ name: 'Productos', path: '/productos' }]}
-        title={<>Software propio para <span className="text-cielo">operaciones reales.</span></>}
+        title={<>Software propio para operaciones reales.</>}
         lead="Cada producto de FlightDev nació de una operación concreta y se usa todos los días. Hoy el portafolio cubre comercio y transporte, y crece con cada problema que vale la pena resolver bien."
       />
       <ProductPortfolio />

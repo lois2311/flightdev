@@ -15,7 +15,7 @@ export default function AboutPage() {
     <>
       <PageHero
         crumbs={[{ name: 'Nosotros', path: '/nosotros' }]}
-        title={<>Una empresa de productos, <span className="text-cielo">no una fábrica de páginas.</span></>}
+        title={<>Una empresa de productos, no una fábrica de páginas.</>}
         lead="FlightDev nació en Manizales para construir software que las empresas usen todos los días. Hoy operamos productos propios y desarrollamos soluciones para otras empresas con la misma disciplina."
       />
       <section aria-labelledby="vision" className="gutter border-t border-borde bg-noche py-24">

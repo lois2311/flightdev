@@ -10,12 +10,11 @@ const ACTORS = [
 export default function FleetSchema() {
   return (
     <figure className="m-0 flex flex-col gap-3">
-      <div className="relative grid gap-4 rounded-[22px] border border-borde bg-[linear-gradient(180deg,#0F2340,#0B1A31)] p-[clamp(16px,3vw,32px)] md:grid-cols-3">
-        <div aria-hidden="true" className="absolute left-[16%] right-[16%] top-[58px] hidden border-t border-dashed border-cielo/40 md:block" />
+      <div className="grid gap-px border border-borde bg-borde md:grid-cols-3">
         {ACTORS.map(({ Icon, who, where, does }) => (
-          <div key={who} className="relative flex flex-col gap-4 rounded-2xl border border-borde bg-superficie p-5">
+          <div key={who} className="flex flex-col gap-4 bg-noche p-6">
             <div className="flex items-center gap-3">
-              <span aria-hidden="true" className="grid size-11 place-items-center rounded-xl border border-cielo/30 bg-noche text-cielo-claro"><Icon size={20} strokeWidth={1.7} /></span>
+              <Icon aria-hidden="true" size={22} strokeWidth={1.7} className="shrink-0 text-cielo-claro" />
               <div className="flex flex-col">
                 <span className="font-display text-lg font-semibold text-hueso">{who}</span>
                 <span className="font-mono text-[11px] tracking-[.08em] text-muted">{where.toUpperCase()}</span>

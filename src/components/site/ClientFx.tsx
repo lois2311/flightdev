@@ -2,15 +2,14 @@
 
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { usePointerFx, useReveal } from '@/lib/fx';
+import { useTerrainDraw } from '@/lib/fx';
 import { captureAttribution } from '@/lib/attribution';
 import { track, type AnalyticsEvent } from '@/lib/analytics';
 
-/** Site-wide client behaviour: reveal/pointer motion, first-touch attribution, and [data-track] click events. */
+/** Site-wide client behaviour: terrain draw-in, first-touch attribution, and [data-track] click events. */
 export default function ClientFx() {
   const path = usePathname();
-  useReveal(path);
-  usePointerFx();
+  useTerrainDraw(path);
 
   useEffect(() => {
     captureAttribution();
