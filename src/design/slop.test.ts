@@ -6,7 +6,10 @@ import { describe, expect, it } from 'vitest';
 // budget in the same commit. Raising one needs a stated reason in the PR.
 // ponytail: regex counts over source text, not a real AST lint; good enough to stop regressions.
 const BUDGET: Record<string, { re: RegExp; max: number }> = {
-  'two-tone heading (accent span inside a title)': { re: /<span className="text-(cielo|cielo-claro|voltaje)">/g, max: 1 }, // FleetTrack Pro wordmark
+  // Scoped to real headings: mono instrument labels (waypoint codes, statuses) use accent spans legitimately; a heading never does.
+  // Second branch: headings rendered from a `title` prop (PageHero, CtaBand, Faq, LeadSection, LegalPage).
+  // The FleetTrack Pro wordmark is the product's own logotype and lives outside any heading (components/fleettrack/FleetTrackWordmark.tsx).
+  'two-tone heading (accent span inside a title)': { re: /(?:<h[1-6][^>]*>(?:(?!<\/h[1-6]>)[\s\S])*?|title=\{<>(?:(?!<\/>)[\s\S])*?)<span className="text-(cielo|cielo-claro|voltaje)">/g, max: 0 },
   'cursor-following spotlight': { re: /Spotlight/g, max: 0 },
   'decorative pulse dot': { re: /fdPulse|animate-pulse/g, max: 0 },
   'auto-scrolling marquee': { re: /marquee/g, max: 0 },
@@ -28,6 +31,14 @@ const files = (readdirSync(SRC, { recursive: true }) as string[])
   .map(f => ({ f, text: readFileSync(join(SRC, f), 'utf8').replace(/\/\*[\s\S]*?\*\/|^\s*\/\/.*$/gm, '') }));
 
 describe('AI-slop ratchet', () => {
+  it('two-tone rule catches an accent span inside a heading, not a label outside one', () => {
+    const re = BUDGET['two-tone heading (accent span inside a title)'].re;
+    expect('<h2 className="h2">Software <b>x</b> <span className="text-cielo">que opera</span></h2>'.match(re)).toHaveLength(1);
+    expect('<h2>Hola</h2><span className="text-cielo">001</span>'.match(re)).toBeNull();
+    expect('<PageHero title={<>Software <span className="text-cielo">que opera</span></>} />'.match(re)).toHaveLength(1);
+    expect('<PageHero title={<>Hola</>} label={<span className="text-cielo">001</span>} />'.match(re)).toBeNull();
+  });
+
   for (const [name, { re, max }] of Object.entries(BUDGET)) {
     it(`${name} stays within budget (${max})`, () => {
       const hits = files.flatMap(({ f, text }) => (text.match(re) ?? []).map(() => f));
