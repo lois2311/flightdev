@@ -15,7 +15,7 @@ Las referencias son objetos del mundo del vuelo y del territorio, no sitios web 
 | Cartas aeronáuticas (VFR, Jeppesen) | Líneas finas, rótulos condensados, datos en mono, nada decorativo | Listas sobre filetes en lugar de tarjetas; tablas de datos en mono; titulares condensados |
 | Señalética de aeropuerto | Un color reservado para la acción; formas rectas | `voltaje` solo en la acción comercial principal; botones rectos de radio 3 px |
 | Paneles de instrumentos | Lecturas con datos reales, sin animación de relleno | Base, posición y hora local reales en el hero |
-| Relieve de la Cordillera Central | El territorio como trazo | Relieve generativo determinista con semilla por ruta |
+| Relieve de la Cordillera Central | El territorio como trazo | Hero: relieve real (SRTM) entre Manizales y el Nevado del Ruiz con curvas de nivel cada 100 m. Resto del sitio: relieve generativo determinista con semilla por ruta |
 
 ## Lenguaje gráfico
 
@@ -24,6 +24,7 @@ Las referencias son objetos del mundo del vuelo y del territorio, no sitios web 
 - **Filetes**: la estructura se hace con líneas de 1 px (`borde`), no con tarjetas, sombras ni degradados.
 - **Instrumentos**: IBM Plex Mono, mayúsculas, *tracking* 0.06–0.12em. Muestran datos verificables (coordenadas, hora local, cliente, estado), nunca métricas inventadas.
 - **Avión de papel**: firma de marca en el hero, en el progreso de lectura del header y en el cierre comercial.
+- **Plan de vuelo del home**: cada sección es un tramo (`components/home/Leg.tsx`) con código, nombre y siguiente *waypoint* (ORIGEN → 001 PRODUCTOS → 002 INGENIERÍA → 003 CASO → 004 MÉTODO → DESTINO). Una línea discontinua en el margen izquierdo los une y el header marca cada *waypoint* sobre la línea de progreso. Ver `FLIGHTDEV_CREATIVE_DIRECTION_V2.md`.
 
 ## Color
 
@@ -44,13 +45,13 @@ Archivo, una sola familia variable: **condensada** (`wdth` 72) en titulares, com
 
 ## Movimiento
 
-Dos cosas se mueven: la ruta discontinua y el relieve al dibujarse. Nada sigue al cursor, nada aparece con *fade-in* al hacer scroll y nada late. Con `prefers-reduced-motion` ambas se detienen. Las demos de producto (caja de Vendra, cotizador de AG Clean Ops) sí se animan, porque muestran cómo funciona el producto.
+Tres cosas se mueven: la ruta discontinua, el relieve al dibujarse y el **vuelo del hero** (`components/art/CordilleraFlight.tsx`, WebGL2 sobre el relieve real; reemplazó al prototipo en Canvas 2D `Flyover.tsx`): una carta en perspectiva, con la cámara recorriendo la ruta de la empresa y la tabla de instrumentos nombrando el próximo *waypoint*. Nada sigue al cursor, nada aparece con *fade-in* al hacer scroll y nada late. Con `prefers-reduced-motion` todo se detiene y el hero muestra el relieve estático. Las demos de producto (caja de Vendra, cotizador de AG Clean Ops) sí se animan, porque muestran cómo funciona el producto.
 
 ## Imagen, video e iconografía
 
-- **Fotografía/IA:** no hay fotografía en el sitio. La decisión fue no usar fotos de stock: el arte generativo en SVG es propio, pesa unos pocos KB y nunca simula ser una foto real (ver `FLIGHTDEV_ASSET_INVENTORY.md`).
-- **Interfaz de producto:** viñetas dibujadas en código, rotuladas siempre "Ilustración con datos de ejemplo". Las capturas reales quedan en el backlog (CONT-2).
-- **Video:** ninguno. Un video en el hero comprometería el LCP en móvil sin aportar información.
+- **Fotografía/IA:** no hay fotografía en el sitio (la captura de FleetTrack es una captura de pantalla del producto, no una foto). La decisión fue no usar fotos de stock: el arte generativo en SVG es propio, pesa unos pocos KB y nunca simula ser una foto real (ver `FLIGHTDEV_ASSET_INVENTORY.md`).
+- **Interfaz de producto:** FleetTrack Pro usa una captura real de su entorno de pruebas (`src/content/media/fleettrack-command-center.webp`), rotulada como tal y con datos de prueba. Vendra sigue con la ilustración interactiva rotulada "datos de ejemplo": su captura real sigue en el backlog (CONT-2).
+- **Video:** ninguno. Un video en el hero comprometería el LCP en móvil sin aportar información; la sensación de vuelo la da el relieve real en WebGL (un mapa de alturas PNG de 79 KB, sin librería; el titular sigue siendo el LCP).
 - **Iconos:** lucide-react, en línea con el texto. Sin cajas redondeadas alrededor.
 
 ## Lo que se evita a propósito
@@ -65,6 +66,6 @@ Lo vigila `src/design/slop.test.ts`: el conteo de cada patrón solo puede bajar.
 
 ## Diferenciadores (máximo tres)
 
-1. **Relieve generativo con semilla por ruta**: ninguna página repite montaña y todas comparten lenguaje.
+1. **Relieve real en el hero, generativo en el resto**: el home abre sobre la cordillera de verdad; ninguna otra página repite montaña y todas comparten lenguaje.
 2. **Instrumentos con datos reales**: coordenadas de la base y hora local de Colombia en vivo, en lugar de métricas de relleno.
 3. **Rotulación de carta**: titulares condensados, filetes y datos en mono, en lugar de tarjetas y brillos.
